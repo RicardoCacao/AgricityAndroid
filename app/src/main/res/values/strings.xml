@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Agricity Test2</string>
+    <string name="username">Utilizador</string>
+    <string name="password">Palavra Passe</string>
+    <string name="forgot_your_password">Esqueci a password</string>
+    <string name="login">Login</string>
+    <string name="todo">TODO</string>
+    <string name="contribute">Contribuir</string>
+    <string name="todo_list">TODO LIST</string>
+    <string name="edit_profile">Editar Perfil</string>
+    <string name="college_name">College Name</string>
+    <string name="firstn_lastn">Nome Proprio Sobrenome</string>
+    <string name="practice">Praticar</string>
+    <string name="learn">Aprender</string>
+    <string name="interests">Interesses</string>
+    <string name="dashboard_help">Ajuda</string>
+    <string name="dashboard_settings">Definições</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="main_menu">Menu Principal</string>
+    <string name="codigo">Codigo</string>
+    <string name="acesso">teste</string>
+</resources>
