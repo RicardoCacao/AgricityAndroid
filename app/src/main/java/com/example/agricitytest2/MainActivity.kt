@@ -1,82 +1,63 @@
 package com.example.agricitytest2
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.agricitytest2.databinding.DashboardBinding
-
+import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.series.DataPoint
+import com.jjoe64.graphview.series.LineGraphSeries
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: DashboardBinding
+    // on below line we are creating
+    // variables for our graph view
+    lateinit var lineGraphView: GraphView
 
     override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-            binding = DashboardBinding.inflate(layoutInflater)
-            setContentView(binding.root)
-
-            // register all the ImageButtons with their appropriate ID
-            val backB = binding.backB
-            val logOutB = binding.logOutB
-            val profileB = binding.profileB
-
-            // register all the Buttons with their appropriate IDs
-            val todoB = binding.todoB
-            val editProfileB = binding.editProfileB
-
-            // register all the card views with their appropriate IDs
-            val contributeCard = binding.contributeCard
-            val practiceCard = binding.practiceCard
-            val learnCard = binding.learnCard
-            val interestsCard = binding.interestsCard
-            val helpCard = binding.helpCard
-            val settingsCard = binding.settingsCard
-
-
-            // handle each of the image buttons with the OnClickListener
-            backB.setOnClickListener {
-                Toast.makeText(this, "Back Button", Toast.LENGTH_SHORT).show()
-            }
-            logOutB.setOnClickListener {
-                Toast.makeText(this, "Logout Button", Toast.LENGTH_SHORT).show()
-            }
-            profileB.setOnClickListener {
-                Toast.makeText(this, "Profile Image", Toast.LENGTH_SHORT).show()
-            }
-
-            // handle each of the buttons with the OnClickListener
-            todoB.setOnClickListener {
-                Toast.makeText(this, "TODO allow", Toast.LENGTH_SHORT).show()
-            }
-            editProfileB.setOnClickListener {
-                Toast.makeText(this, "Editing Profile", Toast.LENGTH_SHORT).show()
-            }
-
-            // handle each of the cards with the OnClickListener
-            contributeCard.setOnClickListener {
-                Toast.makeText(this, "Contribuir", Toast.LENGTH_SHORT).show()
-            }
-            practiceCard.setOnClickListener {
-                Toast.makeText(this, "Practice Programming", Toast.LENGTH_SHORT).show()
-            }
-            learnCard.setOnClickListener {
-                Toast.makeText(this, "Learn Programming", Toast.LENGTH_SHORT).show()
-            }
-            interestsCard.setOnClickListener {
-                Toast.makeText(this, "Filter your Interests", Toast.LENGTH_SHORT).show()
-            }
-            helpCard.setOnClickListener {
-                Toast.makeText(this, "Anything Help you want?", Toast.LENGTH_SHORT).show()
-            }
-            settingsCard.setOnClickListener {
-                Toast.makeText(this, "Change the settings", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    public override fun onStart() = super.onStart()
-    public override fun onResume() = super.onResume()
-    public override fun onPause() = super.onPause()
-    public override fun onDestroy() = super.onDestroy()
-    public override fun onRestart() = super.onRestart()
+        // on below line we are initializing
+        // our variable with their ids.
+//        lineGraphView = findViewById(R.id.idGraphView)
+//
+//        // on below line we are adding data to our graph view.
+//        val series: LineGraphSeries<DataPoint> = LineGraphSeries(
+//            arrayOf(
+//                // on below line we are adding
+//                // each point on our x and y axis.
+//                DataPoint(0.0, 1.0),
+//                DataPoint(1.0, 3.0),
+//                DataPoint(2.0, 4.0),
+//                DataPoint(3.0, 9.0),
+//                DataPoint(4.0, 6.0),
+//                DataPoint(5.0, 3.0),
+//                DataPoint(6.0, 6.0),
+//                DataPoint(7.0, 1.0),
+//                DataPoint(8.0, 2.0)
+//            )
+//        )
+//
+//        // on below line adding animation
+//        lineGraphView.animate()
+//
+//        // on below line we are setting scrollable
+//        // for point graph view
+//        lineGraphView.viewport.isScrollable = true
+//
+//        // on below line we are setting scalable.
+//        lineGraphView.viewport.isScalable = true
+//
+//        // on below line we are setting scalable y
+//        lineGraphView.viewport.setScalableY(true)
+//
+//        // on below line we are setting scrollable y
+//        lineGraphView.viewport.setScrollableY(true)
+//
+//    // on below line we are setting color for series.
+//    series.color = R.color.purple_200
+//
+//    // on below line we are adding
+//    // data series to our graph view.
+//    lineGraphView.addSeries(series)
+}
 }
