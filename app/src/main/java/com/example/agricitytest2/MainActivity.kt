@@ -3,6 +3,7 @@ package com.example.agricitytest2
 import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.androidplot.util.PixelUtils
 import com.androidplot.xy.*
@@ -78,6 +79,15 @@ class MainActivity : AppCompatActivity() {
             override fun parseObject(source: String, pos: ParsePosition): Any? {
                 return null
             }
+        }
+
+        val submit: Button = binding.button2
+        submit.setOnClickListener{
+            val dbConnection: MySQLDbConnection
+            dbConnection = MySQLDbConnection
+            dbConnection.getConnection()
+            dbConnection.executeMySQLQuery()
+
         }
     }
 }
