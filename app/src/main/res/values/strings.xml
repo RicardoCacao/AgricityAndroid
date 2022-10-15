@@ -19,4 +19,5 @@
     <string name="main_menu">Menu Principal</string>
     <string name="codigo">Codigo</string>
     <string name="acesso">teste</string>
+    <string name="button">Button</string>
 </resources>
