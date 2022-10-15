@@ -1,77 +1,71 @@
 package com.example.agricitytest2
 
+import android.graphics.Color
+import android.graphics.DashPathEffect
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.agricitytest2.databinding.DashboardBinding
+import com.androidplot.util.PixelUtils
+import com.androidplot.xy.*
+import com.example.agricitytest2.databinding.ActivityMainBinding
+import java.text.FieldPosition
+import java.text.Format
+import java.text.ParsePosition
+import kotlin.math.roundToInt
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: DashboardBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
 
-            binding = DashboardBinding.inflate(layoutInflater)
+            binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
 
-            // register all the ImageButtons with their appropriate ID
-            val backB = binding.backB
-            val logOutB = binding.logOutB
-            val profileB = binding.profileB
+            val domainLabels = arrayOf<Number>(1,2,3,4,5,6,7,8,9)
+            val series1Number= arrayOf<Number>(1,4,8,12,16,32,26,29,10,13)
+            val series2Number = arrayOf<Number>(5, 2, 10, 5, 20, 10, 40, 20, 80, 40)
 
-            // register all the Buttons with their appropriate IDs
-            val todoB = binding.todoB
-            val editProfileB = binding.editProfileB
+            val series1 : XYSeries = SimpleXYSeries(listOf(* series1Number), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,"Series 1")
+            val series2 : XYSeries = SimpleXYSeries(listOf(* series2Number), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,"Series 2")
 
-            // register all the card views with their appropriate IDs
-            val contributeCard = binding.contributeCard
-            val practiceCard = binding.practiceCard
-            val learnCard = binding.learnCard
-            val interestsCard = binding.interestsCard
-            val helpCard = binding.helpCard
-            val settingsCard = binding.settingsCard
+            val series1Format = LineAndPointFormatter(Color.BLUE,Color.BLACK,Color.YELLOW,null)
+            val series2Format = LineAndPointFormatter(Color.GREEN,Color.RED,Color.GRAY,null)
 
 
-            // handle each of the image buttons with the OnClickListener
-            backB.setOnClickListener {
-                Toast.makeText(this, "Back Button", Toast.LENGTH_SHORT).show()
-            }
-            logOutB.setOnClickListener {
-                Toast.makeText(this, "Logout Button", Toast.LENGTH_SHORT).show()
-            }
-            profileB.setOnClickListener {
-                Toast.makeText(this, "Profile Image", Toast.LENGTH_SHORT).show()
+            series2Format.linePaint.pathEffect = DashPathEffect(
+            floatArrayOf(
+                // always use DP when specifying pixel sizes, to keep things consistent across devices:
+                PixelUtils.dpToPix(20f),
+                PixelUtils.dpToPix(15f)
+            ), 0F)
+
+            val plot = binding.plot
+
+            series1Format.interpolationParams = CatmullRomInterpolator.Params(10,CatmullRomInterpolator.Type.Centripetal)
+
+            plot.addSeries(series1,series1Format)
+            plot.addSeries(series2,series2Format)
+
+            plot.graph.getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).format = object : Format(){
+                override fun format(
+                    obj: Any?,
+                    toAppendTo: StringBuffer,
+                    pos: FieldPosition,
+
+                ) : StringBuffer {
+                    val i = (obj as Number).toFloat().roundToInt()
+                    return toAppendTo.append(domainLabels[i])
+
+                }
+
+                override fun parseObject(source: String?, pos: ParsePosition): Any?{
+                    return null
+                }
+
             }
 
-            // handle each of the buttons with the OnClickListener
-            todoB.setOnClickListener {
-                Toast.makeText(this, "TODO allow", Toast.LENGTH_SHORT).show()
-            }
-            editProfileB.setOnClickListener {
-                Toast.makeText(this, "Editing Profile", Toast.LENGTH_SHORT).show()
-            }
-
-            // handle each of the cards with the OnClickListener
-            contributeCard.setOnClickListener {
-                Toast.makeText(this, "Contribuir", Toast.LENGTH_SHORT).show()
-            }
-            practiceCard.setOnClickListener {
-                Toast.makeText(this, "Practice Programming", Toast.LENGTH_SHORT).show()
-            }
-            learnCard.setOnClickListener {
-                Toast.makeText(this, "Learn Programming", Toast.LENGTH_SHORT).show()
-            }
-            interestsCard.setOnClickListener {
-                Toast.makeText(this, "Filter your Interests", Toast.LENGTH_SHORT).show()
-            }
-            helpCard.setOnClickListener {
-                Toast.makeText(this, "Anything Help you want?", Toast.LENGTH_SHORT).show()
-            }
-            settingsCard.setOnClickListener {
-                Toast.makeText(this, "Change the settings", Toast.LENGTH_SHORT).show()
-            }
     }
 
     public override fun onStart() = super.onStart()
@@ -80,3 +74,5 @@ class MainActivity : AppCompatActivity() {
     public override fun onDestroy() = super.onDestroy()
     public override fun onRestart() = super.onRestart()
 }
+
+
