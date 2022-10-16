@@ -10,7 +10,7 @@ import java.sql.DriverManager.*
 object MySQLDbConnection {
 
     internal var conn: Connection? = null
-    internal var username = "root" // provide the username
+    internal var username = "lan" // provide the username
     internal var password = "" // provide the corresponding password
 
     @JvmStatic fun main(args: Array<String>) {
@@ -76,7 +76,7 @@ object MySQLDbConnection {
      */
     fun getConnection() {
         val connectionProps = Properties()
-        connectionProps.put("root", username)
+        connectionProps.put("lan", username)
         connectionProps.put("", password)
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance()
