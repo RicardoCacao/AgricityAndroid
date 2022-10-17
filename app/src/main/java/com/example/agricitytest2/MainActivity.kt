@@ -45,8 +45,8 @@ class MainActivity : AppCompatActivity() {
 
         // create formatters to use for drawing a series using LineAndPointRenderer
         // and configure them from xml:
-        val series1Format = LineAndPointFormatter(Color.YELLOW, Color.GREEN, Color.BLUE, null)
-        val series2Format = LineAndPointFormatter(Color.RED, Color.GREEN, Color.BLUE, null)
+        val series1Format = LineAndPointFormatter(Color.YELLOW, Color.GREEN, null, null)
+        val series2Format = LineAndPointFormatter(Color.RED, Color.GREEN, null, null)
 
         // add an "dash" effect to the series2 line:
         series2Format.linePaint.pathEffect = DashPathEffect(
@@ -81,13 +81,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val submit: Button = binding.button2
-        submit.setOnClickListener{
+        val submit: Button = binding.connect2DB
+       /* submit.setOnClickListener{
             val dbConnection: MySQLDbConnection
             dbConnection = MySQLDbConnection
             dbConnection.getConnection()
             dbConnection.executeMySQLQuery()
 
-        }
+        }*/
     }
 }
