@@ -34,7 +34,7 @@
     <string name="rain24hours">Chuva 24 Horas</string>
     <string name="windDirection">Direcao do Vento</string>
     <string name="tempValue">%s ºC</string>
-    <string name="humidityValue">%s ml/c3 </string>
+    <string name="humidityValue">%s %% </string>
     <string name="pressureValue">%s Bar</string>
     <string name="rain24hrValue">%s mm</string>
     <string name="windSpeedValue">%s KM/h</string>
