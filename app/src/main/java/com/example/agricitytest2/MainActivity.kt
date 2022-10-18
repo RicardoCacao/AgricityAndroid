@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
+import com.example.agricitytest2.R
 import androidx.appcompat.app.AppCompatActivity
 import com.androidplot.util.PixelUtils
 import com.androidplot.xy.*
@@ -13,6 +15,7 @@ import java.text.FieldPosition
 import java.text.Format
 import java.text.ParsePosition
 import java.util.*
+import kotlin.random.Random
 import kotlin.math.roundToInt
 
 
@@ -83,19 +86,61 @@ class MainActivity : AppCompatActivity() {
             }
         }
 */
-
-        val submit: Button = binding.connect2DB
+        val submit: ImageButton = binding.logOutButton
         submit.setOnClickListener {
-            val returnToLogin = Intent(applicationContext,Login::class.java)
+            val returnToLogin = Intent(applicationContext, Login::class.java)
             startActivity(returnToLogin)
             finish()
         }
-       /* submit.setOnClickListener{
-            val dbConnection: MySQLDbConnection
-            dbConnection = MySQLDbConnection
-            dbConnection.getConnection()
-            dbConnection.executeMySQLQuery()
 
-        }*/
+        var temperature: String
+        var humidity: String
+        var rain: String
+        var windspeed: String
+        var pressure: String
+        var windDir = "NNW"
+
+        val rand = Random
+
+
+        temperature = rand.nextInt(16).toString()
+        humidity = rand.nextInt(16).toString()
+        rain = rand.nextInt(16).toString()
+        windspeed = rand.nextInt(16).toString()
+        pressure = rand.nextInt(16).toString()
+
+        binding.textViewTempValue.text = getString(R.string.tempValue, temperature)
+        binding.textViewHumidityValue.text = getString(R.string.humidityValue, humidity)
+        binding.textViewRain24hrValue.text = getString(R.string.rain24hrValue, rain)
+        binding.textViewWindSpeedValue.text = getString(R.string.windSpeedValue, windspeed)
+        binding.textViewWindDirValue.text = getString(R.string.windDirValue, windDir)
+        binding.textViewPressureValue.text = getString(R.string.pressureValue, pressure)
+
+
+
+        val eheheh: ImageButton = binding.backButton
+        eheheh.setOnClickListener {
+
+            temperature = rand.nextInt(16).toString()
+            humidity = rand.nextInt(16).toString()
+            rain = rand.nextInt(16).toString()
+            windspeed = rand.nextInt(16).toString()
+            pressure = rand.nextInt(16).toString()
+
+            binding.textViewTempValue.text = getString(R.string.tempValue, temperature)
+            binding.textViewHumidityValue.text = getString(R.string.humidityValue, humidity)
+            binding.textViewRain24hrValue.text = getString(R.string.rain24hrValue, rain)
+            binding.textViewWindSpeedValue.text = getString(R.string.windSpeedValue, windspeed)
+            binding.textViewPressureValue.text = getString(R.string.pressureValue, pressure)
+        }
+
+
+        /* submit.setOnClickListener{
+             val dbConnection: MySQLDbConnection
+             dbConnection = MySQLDbConnection
+             dbConnection.getConnection()
+             dbConnection.executeMySQLQuery()
+
+         }*/
     }
 }

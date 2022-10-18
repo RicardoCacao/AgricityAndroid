@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Agricity Test2</string>
+    <string name="app_name" translatable="false">Agricity Test2</string>
     <string name="username">Utilizador</string>
     <string name="password">Palavra Passe</string>
     <string name="forgot_your_password">Esqueci a password</string>
@@ -33,4 +33,10 @@
     <string name="pressure">Pressão</string>
     <string name="rain24hours">Chuva 24 Horas</string>
     <string name="windDirection">Direcao do Vento</string>
+    <string name="tempValue">%s ºC</string>
+    <string name="humidityValue">%s ml/c3 </string>
+    <string name="pressureValue">%s Bar</string>
+    <string name="rain24hrValue">%s mm</string>
+    <string name="windSpeedValue">%s KM/h</string>
+    <string name="windDirValue">%s</string>
 </resources>
