@@ -4,8 +4,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Toast
 import com.example.agricitytest2.R
 import androidx.appcompat.app.AppCompatActivity
 import com.androidplot.util.PixelUtils
@@ -19,7 +21,7 @@ import kotlin.random.Random
 import kotlin.math.roundToInt
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -28,6 +30,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
 
 /*
@@ -86,6 +90,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
 */
+        val temperatureCard = binding.temperatureCard
+        val humidityCard = binding.humidityCard
+        val pressureCard = binding.pressureCard
+        val rain24HrsCard = binding.rain24HrsCard
+        val windSpeedCard = binding.windSpeedCard
+
+
+        temperatureCard.setOnClickListener(this)
+        humidityCard.setOnClickListener(this)
+        pressureCard.setOnClickListener(this)
+        rain24HrsCard.setOnClickListener(this)
+        windSpeedCard.setOnClickListener(this)
+
+
         val submit: ImageButton = binding.logOutButton
         submit.setOnClickListener {
             val returnToLogin = Intent(applicationContext, Login::class.java)
@@ -142,5 +160,26 @@ class MainActivity : AppCompatActivity() {
              dbConnection.executeMySQLQuery()
 
          }*/
+    }
+
+    override fun onClick(v: View){
+        when (v.id) {
+            binding.temperatureCard.id -> {
+                Toast.makeText(this, "Temperatura", Toast.LENGTH_SHORT).show()
+            }
+            binding.humidityCard.id -> {
+                Toast.makeText(this, "Humidade", Toast.LENGTH_SHORT).show()
+            }
+            binding.pressureCard.id -> {
+                Toast.makeText(this, "pressao", Toast.LENGTH_SHORT).show()
+            }
+            binding.rain24HrsCard.id -> {
+                Toast.makeText(this, "Chuva", Toast.LENGTH_SHORT).show()
+            }
+            binding.windSpeedCard.id -> {
+                Toast.makeText(this, "vento", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 }
