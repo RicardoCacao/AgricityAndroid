@@ -39,4 +39,5 @@
     <string name="rain24hrValue">%s mm</string>
     <string name="windSpeedValue">%s KM/h</string>
     <string name="windDirValue">%s</string>
+    <string name="domain">%s</string>
 </resources>

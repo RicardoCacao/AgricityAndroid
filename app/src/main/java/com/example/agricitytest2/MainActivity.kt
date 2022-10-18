@@ -165,7 +165,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View){
         when (v.id) {
             binding.temperatureCard.id -> {
-                Toast.makeText(this, "Temperatura", Toast.LENGTH_SHORT).show()
+                val goToGraphActivity = Intent(applicationContext,GraphActivity::class.java)
+                goToGraphActivity.putExtra("Parameter","Temperature")
+                startActivity(goToGraphActivity)
+                finish()
             }
             binding.humidityCard.id -> {
                 Toast.makeText(this, "Humidade", Toast.LENGTH_SHORT).show()
@@ -182,4 +185,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
     }
+
+
 }
