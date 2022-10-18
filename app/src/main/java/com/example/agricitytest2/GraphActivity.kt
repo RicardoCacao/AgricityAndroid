@@ -1,10 +1,9 @@
 package com.example.agricitytest2
 
 import android.graphics.Color
-import android.graphics.DashPathEffect
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.androidplot.util.PixelUtils
 import com.androidplot.xy.*
 import com.example.agricitytest2.databinding.ActivityGraphBinding
 import java.text.FieldPosition
@@ -25,6 +24,8 @@ class GraphActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val parameter: String = intent.getStringExtra("Parameter").toString()
+        Toast.makeText(this, parameter, Toast.LENGTH_SHORT).show()
+
 
 
 
@@ -33,7 +34,9 @@ class GraphActivity : AppCompatActivity() {
 
         // create a couple arrays of y-values to plot:
 
-        binding.plot.domainTitle.text = getString(R.string.domain, parameter)
+        binding.plot.domainTitle.text = getString(R.string.graphDomainTitle, "Dias")
+        binding.plot.rangeTitle.text = getString(R.string.graphRangeTitle, parameter)
+        binding.plot.title.text = getString(R.string.graphTitle, parameter)
 
         val domainLabels = arrayOf<Number>(1, 2, 3, 6, 7, 8, 9, 10, 13, 14)
 
@@ -64,7 +67,7 @@ class GraphActivity : AppCompatActivity() {
 
         // create formatters to use for drawing a series using LineAndPointRenderer
         // and configure them from xml:
-        val series1Format = LineAndPointFormatter(Color.WHITE, Color.BLUE, null, null)
+        val series1Format = LineAndPointFormatter(Color.BLACK, Color.BLUE, null, null)
 //        val series2Format = LineAndPointFormatter(Color.RED, Color.GREEN, null, null)
 
         // add an "dash" effect to the series2 line:
@@ -99,9 +102,5 @@ class GraphActivity : AppCompatActivity() {
                 return null
             }
         }
-
     }
-
-
-
 }

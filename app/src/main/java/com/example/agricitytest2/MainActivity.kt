@@ -1,24 +1,12 @@
 package com.example.agricitytest2
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.DashPathEffect
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
-import android.widget.Toast
-import com.example.agricitytest2.R
 import androidx.appcompat.app.AppCompatActivity
-import com.androidplot.util.PixelUtils
-import com.androidplot.xy.*
 import com.example.agricitytest2.databinding.ActivityMainBinding
-import java.text.FieldPosition
-import java.text.Format
-import java.text.ParsePosition
-import java.util.*
 import kotlin.random.Random
-import kotlin.math.roundToInt
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -116,7 +104,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         var rain: String
         var windspeed: String
         var pressure: String
-        var windDir = "NNW"
+        val windDir = getString(R.string.windDirectionValue)
 
         val rand = Random
 
@@ -166,25 +154,36 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when (v.id) {
             binding.temperatureCard.id -> {
                 val goToGraphActivity = Intent(applicationContext,GraphActivity::class.java)
-                goToGraphActivity.putExtra("Parameter","Temperature")
+                goToGraphActivity.putExtra("Parameter","Temperatura")
                 startActivity(goToGraphActivity)
-                finish()
+//                finish()
             }
             binding.humidityCard.id -> {
-                Toast.makeText(this, "Humidade", Toast.LENGTH_SHORT).show()
+                val goToGraphActivity = Intent(applicationContext,GraphActivity::class.java)
+                goToGraphActivity.putExtra("Parameter","Humidade")
+                startActivity(goToGraphActivity)
+//              finish()
             }
             binding.pressureCard.id -> {
-                Toast.makeText(this, "pressao", Toast.LENGTH_SHORT).show()
+                val goToGraphActivity = Intent(applicationContext,GraphActivity::class.java)
+                goToGraphActivity.putExtra("Parameter","Pressão")
+                startActivity(goToGraphActivity)
+//              finish()
             }
             binding.rain24HrsCard.id -> {
-                Toast.makeText(this, "Chuva", Toast.LENGTH_SHORT).show()
+                val goToGraphActivity = Intent(applicationContext,GraphActivity::class.java)
+                goToGraphActivity.putExtra("Parameter","Chuva")
+                startActivity(goToGraphActivity)
+//              finish()
             }
             binding.windSpeedCard.id -> {
-                Toast.makeText(this, "vento", Toast.LENGTH_SHORT).show()
+                val goToGraphActivity = Intent(applicationContext,GraphActivity::class.java)
+                goToGraphActivity.putExtra("Parameter","Velocidade do vento")
+                startActivity(goToGraphActivity)
+//              finish()
             }
         }
 
     }
-
 
 }

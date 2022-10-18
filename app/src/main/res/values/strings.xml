@@ -39,5 +39,8 @@
     <string name="rain24hrValue">%s mm</string>
     <string name="windSpeedValue">%s KM/h</string>
     <string name="windDirValue">%s</string>
-    <string name="domain">%s</string>
+    <string name="graphDomainTitle">%s</string>
+    <string name="graphTitle">Gráfico de %s conforme o dia</string>
+    <string name="graphRangeTitle">%s</string>
+    <string name="windDirectionValue">NNW</string>
 </resources>
