@@ -17,15 +17,15 @@
 
     <ImageButton
         android:id="@+id/backB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="58dp"
+        android:layout_height="37dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="?attr/selectableItemBackground"
         android:padding="8dp"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView"
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/firstn_lastn"
+                android:text="Localização"
                 android:textAllCaps="true"
                 android:textColor="@color/green_500"
                 android:textSize="16sp"
@@ -92,44 +92,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/acesso"
+                android:text="Coimbra, Agrária"
                 android:textColor="@android:color/black"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@+id/textView2"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/todoB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/todo_list"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/editProfileB"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/edit_profile"
-                android:textColor="@color/green_500"
-                app:layout_constraintBottom_toBottomOf="@+id/todoB"
-                app:layout_constraintStart_toEndOf="@+id/todoB"/>
-
-            <ImageButton
-                android:id="@+id/profileB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:background="?attr/selectableItemBackground"
-                android:padding="8dp"
-                android:src="@drawable/profile"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -148,7 +116,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/contributeCard"
+            android:id="@+id/temperatureCard"
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:layout_margin="8dp"
@@ -163,23 +131,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/image_view1"
+                <TextView
+                    android:id="@+id/textViewTempValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/write"
-                    app:layout_constraintBottom_toTopOf="@+id/textView1"
+                    android:text="SUSSY ºC"
+                    android:gravity="center_horizontal"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewTemperature"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/textViewTempTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/contribute"
+                    android:text="2 Min ago"
+                    app:layout_constraintStart_toStartOf="@id/textViewTempValue"
+                    android:paddingTop="2dp"
+                    app:layout_constraintTop_toBottomOf="@id/textViewTempValue"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewTemperature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/temperatura"
                     android:textAllCaps="true"
                     android:textColor="@color/green_500"
                     android:textSize="14sp"
@@ -188,14 +169,14 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/image_view1" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewTempValue" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/practiceCard"
+            android:id="@+id/humidityCard"
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:layout_margin="8dp"
@@ -210,23 +191,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/image_view20"
+                <TextView
+                    android:id="@+id/textViewHumidityValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/practice"
-                    app:layout_constraintBottom_toTopOf="@+id/textView20"
+                    android:gravity="center_horizontal"
+                    android:text="Valor"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewHumidity"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView20"
+                    android:id="@+id/textViewHumidityTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/codigo"
+                    android:text="2 Min ago"
+                    app:layout_constraintStart_toStartOf="@id/textViewHumidityValue"
+                    android:paddingTop="2dp"
+                    app:layout_constraintTop_toBottomOf="@id/textViewHumidityValue"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewHumidity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/humidity"
                     android:textAllCaps="true"
                     android:textColor="@color/green_500"
                     android:textSize="14sp"
@@ -235,7 +229,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/image_view20" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewHumidityValue" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -270,23 +264,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/image_view21"
+                <TextView
+                    android:id="@+id/textViewPressureValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/learn"
-                    app:layout_constraintBottom_toTopOf="@+id/textView21"
+                    android:text="500 Bar"
+                    android:textStyle="bold"
+
+                    android:gravity="center"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewPressure"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView21"
+                    android:id="@+id/textViewPressureTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/learn"
+                    android:text="2 Min ago"
+                    app:layout_constraintStart_toStartOf="@id/textViewPressureValue"
+                    android:paddingTop="2dp"
+                    app:layout_constraintTop_toBottomOf="@id/textViewPressureValue"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewPressure"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/pressure"
                     android:textAllCaps="true"
                     android:textColor="@color/green_500"
                     android:textSize="14sp"
@@ -295,7 +304,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/image_view21" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewPressureValue" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -317,23 +326,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/image_view22"
+                <TextView
+                    android:id="@+id/textViewRain24hrValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/interests"
-                    app:layout_constraintBottom_toTopOf="@+id/textView22"
+                    android:gravity="center"
+                    android:text="14mm"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewRain24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView22"
+                    android:id="@+id/textViewRain24hrTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/interests"
+                    android:text="2 Min ago"
+                    app:layout_constraintStart_toStartOf="@id/textViewRain24hrValue"
+                    android:paddingTop="2dp"
+                    app:layout_constraintTop_toBottomOf="@id/textViewRain24hrValue"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewRain24"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/rain24hours"
                     android:textAllCaps="true"
                     android:textColor="@color/green_500"
                     android:textSize="14sp"
@@ -342,7 +365,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/image_view22" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewRain24hrValue" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -376,23 +399,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/image_view23"
+                <TextView
+                    android:id="@+id/textViewWindSpeedValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/help"
-                    app:layout_constraintBottom_toTopOf="@+id/textView23"
+                    android:gravity="center"
+                    android:text="13 KM/h"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewWindSpeed"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView23"
+                    android:id="@+id/textViewWindSpeedTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/dashboard_help"
+                    android:text="2 Min ago"
+                    app:layout_constraintStart_toStartOf="@id/textViewWindSpeedValue"
+                    android:paddingTop="2dp"
+                    app:layout_constraintTop_toBottomOf="@id/textViewWindSpeedValue"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewWindSpeed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/windSpeed"
                     android:textAllCaps="true"
                     android:textColor="@color/green_500"
                     android:textSize="14sp"
@@ -401,7 +438,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/image_view23" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewWindSpeedValue" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -423,23 +460,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/image_view"
+                <TextView
+                    android:id="@+id/textViewWindDirValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/settings"
-                    app:layout_constraintBottom_toTopOf="@+id/textView4"
+                    android:text="NNW"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewWindDir"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
+                    android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/textViewWindDirTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/dashboard_settings"
+                    android:text="2 Min ago"
+                    app:layout_constraintStart_toStartOf="@id/textViewWindDirValue"
+                    android:paddingTop="2dp"
+                    app:layout_constraintTop_toBottomOf="@id/textViewWindDirValue"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewWindDir"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/windDirection"
                     android:textAllCaps="true"
                     android:textColor="@color/green_500"
                     android:textSize="14sp"
@@ -448,7 +500,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/image_view" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewWindDirValue" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

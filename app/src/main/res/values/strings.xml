@@ -27,4 +27,10 @@
     <string name="button">Button</string>
     <string name="connectToDB">Ligar</string>
     <string name="buttonPress">Button</string>
+    <string name="temperatura">Temperatura</string>
+    <string name="humidity">Humidade</string>
+    <string name="windSpeed">Velocidade do Vento</string>
+    <string name="pressure">Pressão</string>
+    <string name="rain24hours">Chuva 24 Horas</string>
+    <string name="windDirection">Direcao do Vento</string>
 </resources>

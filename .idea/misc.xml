@@ -5,19 +5,25 @@
       <map>
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.4195" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/custom_rectangle.xml" value="0.216" />
+        <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/help.xml" value="0.2085" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/ic_back.xml" value="0.161" />
+        <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/ic_email.xml" value="0.248" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.216" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/ic_logout.xml" value="0.161" />
+        <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/ic_name.xml" value="0.2085" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/ic_password.xml" value="0.1645" />
+        <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/ic_user.xml" value="0.2085" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/interests.xml" value="0.216" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/learn.xml" value="0.1535" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/practice.xml" value="0.161" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/profile.xml" value="0.161" />
+        <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/settings.xml" value="0.2085" />
+        <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/drawable/write.xml" value="0.2085" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/layout/activity_sign_up.xml" value="0.264" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/layout/activity_signup.xml" value="0.264" />
-        <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/layout/dashboard.xml" value="0.1" />
+        <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/layout/dashboard.xml" value="0.264" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/layout/login.xml" value="0.264" />
         <entry key="..\:/Users/ricardo/AndroidStudioProjects/AgricityTest2/app/src/main/res/layout/notlogin.xml" value="0.1875" />
       </map>
