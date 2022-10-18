@@ -22,8 +22,9 @@
     <string name="signUp">Registar</string>
     <string name="fullname">Nome Completo</string>
     <string name="email">Endereço e-mail</string>
-    <string name="loginhere">Já tem conta? Faça Login aqui</string>
-    <string name="signuphere">Não tem conta? Faça registo aqui</string>
+    <string name="loginhere">Já tem conta? Faça login <u><b>aqui</b></u></string>
+    <string name="signuphere">Não tem conta? Faça registo <u><b>aqui</b></u></string>
     <string name="button">Button</string>
     <string name="connectToDB">Ligar</string>
+    <string name="buttonPress">Button</string>
 </resources>

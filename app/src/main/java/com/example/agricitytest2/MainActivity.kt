@@ -1,5 +1,6 @@
 package com.example.agricitytest2
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.os.Bundle
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+/*
         // initialize our XYPlot reference:
         val plot = binding.plot
 
@@ -80,8 +82,14 @@ class MainActivity : AppCompatActivity() {
                 return null
             }
         }
+*/
 
         val submit: Button = binding.connect2DB
+        submit.setOnClickListener {
+            val returnToLogin = Intent(applicationContext,Login::class.java)
+            startActivity(returnToLogin)
+            finish()
+        }
        /* submit.setOnClickListener{
             val dbConnection: MySQLDbConnection
             dbConnection = MySQLDbConnection
