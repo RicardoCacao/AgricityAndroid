@@ -40,18 +40,18 @@ class GraphActivity : AppCompatActivity() {
 
         val domainLabels = arrayOf<Number>(1, 2, 3, 6, 7, 8, 9, 10, 13, 14)
 
-        val rand = Random(30)
+        val rand = Random
 
-        var prim = rand.nextInt(30)
-        var seg = rand.nextInt(30)
-        var ter = rand.nextInt(30)
-        var qua = rand.nextInt(30)
-        var qui = rand.nextInt(30)
-        var sex = rand.nextInt(30)
-        var set = rand.nextInt(30)
-        var oit = rand.nextInt(30)
-        var nov = rand.nextInt(30)
-        var dez = rand.nextInt(30)
+        val prim = rand.nextInt(30)
+        val seg = rand.nextInt(30)
+        val ter = rand.nextInt(30)
+        val qua = rand.nextInt(30)
+        val qui = rand.nextInt(30)
+        val sex = rand.nextInt(30)
+        val set = rand.nextInt(30)
+        val oit = rand.nextInt(30)
+        val nov = rand.nextInt(30)
+        val dez = rand.nextInt(30)
 
         val series1Numbers = arrayOf<Number>(prim, seg, ter, qua, qui, sex, set, oit, nov, dez)
 //        val series2Numbers = arrayOf<Number>(5, 2, 10, 5, 20, 10, 40, 20, 80, 40)
@@ -80,6 +80,7 @@ class GraphActivity : AppCompatActivity() {
 */
         // just for fun, add some smoothing to the lines:
         // see: http://androidplot.com/smooth-curves-and-androidplot/
+
         series1Format.interpolationParams =
             CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal)
 //        series2Format.interpolationParams =

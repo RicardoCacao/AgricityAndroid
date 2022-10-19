@@ -16,14 +16,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/backButton"
+        android:id="@+id/menuButton"
         android:layout_width="58dp"
-        android:layout_height="37dp"
+        android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="?attr/selectableItemBackground"
         android:padding="8dp"
-        android:src="@drawable/ic_back"
+        android:src="@drawable/ic_menu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,7 +39,7 @@
         android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintStart_toEndOf="@+id/menuButton"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
@@ -49,6 +49,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="?attr/selectableItemBackground"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
         android:padding="8dp"
         android:src="@drawable/ic_logout"
         app:layout_constraintCircleRadius="24dp"
@@ -128,7 +130,6 @@
             app:cardCornerRadius="8dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/test"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -136,8 +137,8 @@
                     android:id="@+id/textViewTempValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/tempValue"
                     android:gravity="center_horizontal"
+                    android:text="@string/tempValue"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/textViewTemperature"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -381,6 +382,7 @@
         android:orientation="horizontal"
         android:weightSum="2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
@@ -419,11 +421,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:paddingTop="2dp"
                     android:text="2 Min ago"
                     app:layout_constraintStart_toStartOf="@id/textViewWindSpeedValue"
-                    android:paddingTop="2dp"
-                    app:layout_constraintTop_toBottomOf="@id/textViewWindSpeedValue"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/textViewWindSpeedValue" />
 
                 <TextView
                     android:id="@+id/textViewWindSpeed"
@@ -465,14 +466,14 @@
                     android:id="@+id/textViewWindDirValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="@string/windDirValue"
                     android:textAllCaps="true"
+                    android:textSize="15sp"
                     android:textStyle="bold"
-                    android:gravity="center"
                     app:layout_constraintBottom_toTopOf="@+id/textViewWindDir"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -481,11 +482,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:paddingTop="2dp"
                     android:text="2 Min ago"
                     app:layout_constraintStart_toStartOf="@id/textViewWindDirValue"
-                    android:paddingTop="2dp"
-                    app:layout_constraintTop_toBottomOf="@id/textViewWindDirValue"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/textViewWindDirValue" />
 
                 <TextView
                     android:id="@+id/textViewWindDir"

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agricitytest2.databinding.ActivityMainBinding
 import kotlin.random.Random
@@ -124,7 +125,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-        val eheheh: ImageButton = binding.backButton
+        val eheheh: ImageButton = binding.menuButton
         eheheh.setOnClickListener {
 
             temperature = rand.nextInt(16).toString()

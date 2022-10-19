@@ -43,4 +43,5 @@
     <string name="graphTitle">Gráfico de %s conforme o dia</string>
     <string name="graphRangeTitle">%s</string>
     <string name="windDirectionValue">NNW</string>
+    <string name="signInAsGuest">Entrar anónimo</string>
 </resources>
