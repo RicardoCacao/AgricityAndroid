@@ -45,7 +45,5 @@
     <string name="windDirectionValue">NNW</string>
     <string name="signInAsGuest">Entrar anónimo</string>
     <string name="logOutButton">Log out</string>
-    <string name="mode">Day</string>
-    <string name="loginSuccess">Sucesso login</string>
-    <string name="registerSuccess">Sucesso registo</string>
+    <string name="mode">Night</string>
 </resources>

@@ -79,7 +79,7 @@ class Login() : AppCompatActivity() {
 
                             if (result.equals("Login Success")) {
 
-                                Toast.makeText(applicationContext, result, Toast.LENGTH_SHORT)
+                                Toast.makeText(applicationContext, R.string.loginSuccess, Toast.LENGTH_SHORT)
                                     .show()
                                 val intent = Intent(applicationContext, MainActivity::class.java)
                                 startActivity(intent)

@@ -1,5 +1,7 @@
 package com.example.agricitytest2
 
+
+import android.content.res.*
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
@@ -26,11 +28,22 @@ class GraphActivity : AppCompatActivity() {
         val parameter: String = intent.getStringExtra("Parameter").toString()
         Toast.makeText(this, parameter, Toast.LENGTH_SHORT).show()
 
+        if (resources.getString(R.string.mode) == "Day") {
 
+        } else {
+            // Do night stuff here
+        }
+
+
+        /*  when (configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_NO -> {} // Night mode is not active, we're using the light theme
+                Configuration.UI_MODE_NIGHT_YES -> {} // Night mode is active, we're using dark theme
+            }*/
 
 
         // initialize our XYPlot reference:
         val plot = binding.plot
+
 
         // create a couple arrays of y-values to plot:
 
@@ -78,6 +91,7 @@ class GraphActivity : AppCompatActivity() {
             ), 0F
         )
 */
+
         // just for fun, add some smoothing to the lines:
         // see: http://androidplot.com/smooth-curves-and-androidplot/
 
@@ -88,7 +102,7 @@ class GraphActivity : AppCompatActivity() {
 
         // add a new series' to the xyplot:
         plot.addSeries(series1, series1Format)
-//        plot.addSeries(series2, series2Format)
+//      plot.addSeries(series2, series2Format)
         plot.graph.getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).format = object : Format() {
             override fun format(
                 obj: Any,

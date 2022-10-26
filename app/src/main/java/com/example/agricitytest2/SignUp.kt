@@ -85,7 +85,7 @@ class SignUp : AppCompatActivity() {
                             val result = putData.result
                             //End ProgressBar (Set visibility to GONE)
                             if (result.equals("Sign Up Success")) {
-                                Toast.makeText(applicationContext, result, Toast.LENGTH_SHORT)
+                                Toast.makeText(applicationContext, R.string.registerSuccess, Toast.LENGTH_SHORT)
                                     .show()
                                 val intent = Intent(applicationContext, Login::class.java)
                                 startActivity(intent)
