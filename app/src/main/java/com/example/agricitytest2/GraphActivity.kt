@@ -1,17 +1,15 @@
 package com.example.agricitytest2
 
 
-import android.content.res.*
-import android.graphics.Color
+import android.R
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.androidplot.xy.*
 import com.example.agricitytest2.databinding.ActivityGraphBinding
-import java.text.FieldPosition
-import java.text.Format
-import java.text.ParsePosition
-import kotlin.math.roundToInt
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import kotlin.random.Random
 
 
@@ -28,89 +26,61 @@ class GraphActivity : AppCompatActivity() {
         val parameter: String = intent.getStringExtra("Parameter").toString()
         Toast.makeText(this, parameter, Toast.LENGTH_SHORT).show()
 
-
-
-        /*  when (configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-                Configuration.UI_MODE_NIGHT_NO -> {} // Night mode is not active, we're using the light theme
-                Configuration.UI_MODE_NIGHT_YES -> {} // Night mode is active, we're using dark theme
-            }*/
-
-
-        // initialize our XYPlot reference:
-        val plot = binding.plot
-
-
-        // create a couple arrays of y-values to plot:
-
-        binding.plot.domainTitle.text = getString(R.string.graphDomainTitle, "Dias")
-        binding.plot.rangeTitle.text = getString(R.string.graphRangeTitle, parameter)
-        binding.plot.title.text = getString(R.string.graphTitle, parameter)
-
-        val domainLabels = arrayOf<Number>(1, 2, 3, 6, 7, 8, 9, 10, 13, 14)
+        val chart = binding.chart as LineChart
 
         val rand = Random
+        var objects: Array<Values> = arrayOf(Values(0f,0f))
+        objects.fill(Values(0f,0f),0,100)
 
-        val prim = rand.nextInt(30)
-        val seg = rand.nextInt(30)
-        val ter = rand.nextInt(30)
-        val qua = rand.nextInt(30)
-        val qui = rand.nextInt(30)
-        val sex = rand.nextInt(30)
-        val set = rand.nextInt(30)
-        val oit = rand.nextInt(30)
-        val nov = rand.nextInt(30)
-        val dez = rand.nextInt(30)
+        for (i in 0..100){
+            objects[i] = Values(rand.nextDouble(1.2,20.2).toFloat(),rand.nextDouble(1.0,20.2).toFloat())
+        }
 
-        val series1Numbers = arrayOf<Number>(prim, seg, ter, qua, qui, sex, set, oit, nov, dez)
-//        val series2Numbers = arrayOf<Number>(5, 2, 10, 5, 20, 10, 40, 20, 80, 40)
+        var dataObjects: Array<Values> = objects
 
-        // turn the above arrays into XYSeries':
-        // (Y_VALS_ONLY means use the element index as the x value)
-        val series1: XYSeries = SimpleXYSeries(
-            listOf(*series1Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series1"
-        )
-//        val series2: XYSeries = SimpleXYSeries(
-//            listOf(*series2Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series2"
-//        )
+        val entries: MutableList<Entry> = ArrayList()
 
-        // create formatters to use for drawing a series using LineAndPointRenderer
-        // and configure them from xml:
-        val series1Format = LineAndPointFormatter(Color.BLACK, Color.BLUE, null, null)
-//        val series2Format = LineAndPointFormatter(Color.RED, Color.GREEN, null, null)
+        for (data in dataObjects) {
+            // turn your data into Entry objects
+            entries.add(Entry(data.getValueX(), data.getValueY()))
+        }
 
-        // add an "dash" effect to the series2 line:
-       /* series2Format.linePaint.pathEffect = DashPathEffect(
-            floatArrayOf( // always use DP when specifying pixel sizes, to keep things consistent across devices:
-                PixelUtils.dpToPix(20f),
-                PixelUtils.dpToPix(15f)
-            ), 0F
-        )
-*/
 
-        // just for fun, add some smoothing to the lines:
-        // see: http://androidplot.com/smooth-curves-and-androidplot/
+        /*val rand = Random
 
-        series1Format.interpolationParams =
-            CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal)
-//        series2Format.interpolationParams =
-//            CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal)
+        var entries = ArrayList<Entry>()
+            // turn your data into Entry objects
+        for (i in 0..100){
+            var entryX = rand.nextDouble(1.0, 65.2).toFloat()
+            var entryY = (i + 1).toFloat()
+            entries.add(i, Entry(entryX,entryY))
+        }*/
 
-        // add a new series' to the xyplot:
-        plot.addSeries(series1, series1Format)
-//      plot.addSeries(series2, series2Format)
-        plot.graph.getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).format = object : Format() {
-            override fun format(
-                obj: Any,
-                toAppendTo: StringBuffer,
-                pos: FieldPosition
-            ): StringBuffer {
-                val i = (obj as Number).toFloat().roundToInt()
-                return toAppendTo.append(domainLabels[i])
-            }
+        val dataSet = LineDataSet(entries, parameter); // add entries to dataset
+        dataSet.color = R.color.black;
+        dataSet.valueTextColor = R.color.holo_blue_light
+        dataSet.lineWidth = 8f
 
-            override fun parseObject(source: String, pos: ParsePosition): Any? {
-                return null
-            }
+        val lineData = LineData(dataSet)
+        chart.data = lineData
+        chart.invalidate() // refresh
+
+    }
+
+    data class Values(var timeStamp: Float, var yValue: Float){
+        fun set(valX: Float, valY: Float){
+            timeStamp = valX
+            yValue = valY
+        }
+
+        fun getValueX(): Float {
+            return timeStamp
+        }
+        fun getValueY(): Float {
+            return yValue
         }
     }
+
+
+
 }

@@ -5,23 +5,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
-        android:id="@+id/plotFrameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp">
 
-        <com.androidplot.xy.XYPlot
-            android:id="@+id/plot"
-            style="@style/APDefacto.Light"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            app:domainTitle="@string/graphDomainTitle"
-            app:lineLabelRotationBottom="-45"
-            app:lineLabels="left|bottom"
-            app:rangeTitle="@string/graphRangeTitle"
-            app:title="@string/graphTitle" />
-    </FrameLayout>
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
