@@ -28,11 +28,6 @@ class GraphActivity : AppCompatActivity() {
         val parameter: String = intent.getStringExtra("Parameter").toString()
         Toast.makeText(this, parameter, Toast.LENGTH_SHORT).show()
 
-        if (resources.getString(R.string.mode) == "Day") {
-
-        } else {
-            // Do night stuff here
-        }
 
 
         /*  when (configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
