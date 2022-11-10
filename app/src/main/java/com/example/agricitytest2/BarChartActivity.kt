@@ -27,29 +27,6 @@ class BarChartActivity : AppCompatActivity() {
         val parameter: String = intent.getStringExtra("Parameter").toString()
         val barChart = binding.barChart
 
-//        val parametro: String = "temperature"
-//        val experiencia: String = "http://agricity.ipleiria.pt/api/$parametro/1"
-//        Log.d(TAG, "O URL é $experiencia")
-//        val fetchData: FetchData = FetchData(experiencia)
-//        var resultado: JSONArray = JSONArray()
-//        if (fetchData.startFetch()) {
-//            Log.d(TAG, "Começou o fetch")
-//            if (fetchData.onComplete()) {
-//                    resultado = JSONArray(fetchData.result)
-//                    Log.d(TAG, resultado.toString())
-//                    Log.d(TAG, "Completou o fetch")
-//
-//            } else {
-//                Log.e(TAG, "Não Completou o fetch")
-//            }
-//        } else {
-//            Log.e(TAG, "Nao fez fetch")
-//        }
-//        Log.d(TAG, "Chegamos ao fim")
-
-
-
-
 
         val resultado = APIContract.getAPIData(parameter, 1)
 //
@@ -115,7 +92,7 @@ class BarChartActivity : AppCompatActivity() {
             var timestamp = value.toLong()
             timestamp += baseTimestamp
             Log.d(TAG, "getFormattedValue, value : $value")
-            Log.e(TAG, "getFormattedValue, Timestamp : $timestamp")
+            Log.d(TAG, "getFormattedValue, Timestamp : $timestamp")
 
             // Convert from seconds back to milliseconds to format time  to show to the user
             return SimpleDateFormat("HH:mm:ss").format(Date(timestamp * 1000))

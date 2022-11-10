@@ -131,19 +131,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             binding.pressureCard.id -> {
                 val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
-                goToGraphActivity.putExtra("Parameter", "Pressão")
+                goToGraphActivity.putExtra("Parameter", "pressure")
                 startActivity(goToGraphActivity)
 //              finish()
             }
             binding.rain24HrsCard.id -> {
                 val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
-                goToGraphActivity.putExtra("Parameter", "Chuva")
+                goToGraphActivity.putExtra("Parameter", "rain24hrs")
                 startActivity(goToGraphActivity)
 //              finish()
             }
             binding.windSpeedCard.id -> {
                 val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
-                goToGraphActivity.putExtra("Parameter", "Velocidade do vento")
+                goToGraphActivity.putExtra("Parameter", "windspeed")
                 startActivity(goToGraphActivity)
 //              finish()
             }

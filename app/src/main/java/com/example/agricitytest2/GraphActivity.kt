@@ -12,6 +12,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import org.json.JSONArray
 import com.github.mikephil.charting.data.Entry as MikephilChartingDataEntry
 
 
@@ -26,7 +27,7 @@ class GraphActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val parameter: String = intent.getStringExtra("Parameter").toString()
-        Toast.makeText(this, parameter, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, parameter, Toast.LENGTH_SHORT).show()
 
         val chart = binding.chart
 
@@ -50,9 +51,12 @@ class GraphActivity : AppCompatActivity() {
 
 
         val valsComp1 = ArrayList<MikephilChartingDataEntry>()
-        val valsComp2: ArrayList<MikephilChartingDataEntry> = ArrayList<MikephilChartingDataEntry>()
+        val valsComp2 = ArrayList<MikephilChartingDataEntry>()
 
-        val apiresult = APIContract.getAPIData(parameter, 1)
+        val apiResult = APIContract.getAPIData(parameter, 1)
+        if (apiResult == JSONArray()) {
+            Toast.makeText(this, "Error retrieving data from API", Toast.LENGTH_SHORT).show()
+        }
 
 
 
@@ -132,3 +136,5 @@ class GraphActivity : AppCompatActivity() {
 
 
 }
+
+

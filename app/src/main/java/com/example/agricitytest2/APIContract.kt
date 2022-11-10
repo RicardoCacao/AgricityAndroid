@@ -1,6 +1,7 @@
 package com.example.agricitytest2
 
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.vishnusivadas.advanced_httpurlconnection.FetchData
 import org.json.JSONArray
@@ -19,9 +20,14 @@ object APIContract{
         if (fetchData.startFetch()) {
             Log.d(TAG, "Começou o fetch")
             if (fetchData.onComplete()) {
-                resultado = JSONArray(fetchData.result)
-                Log.d(TAG, resultado.toString())
-                Log.d(TAG, "Completou o fetch")
+                try {
+                    resultado = JSONArray(fetchData.result)
+                    Log.d(TAG, resultado.toString())
+                    Log.d(TAG, "Completou o fetch")
+                }catch (e: Exception){
+                    Log.e(TAG, "Exception ocurred: $e")
+                    resultado = JSONArray()
+                }
 
             } else {
                 Log.e(TAG, "Não Completou o fetch")
