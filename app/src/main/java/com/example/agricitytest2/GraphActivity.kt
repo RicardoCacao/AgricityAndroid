@@ -28,6 +28,7 @@ class GraphActivity : AppCompatActivity() {
 
         val chart = binding.chart as LineChart
 
+        TODO("Implement data class for graph values")
         val rand = Random
         var objects: Array<Values> = arrayOf(Values(0f,0f))
         objects.fill(Values(0f,0f),0,100)
@@ -35,6 +36,7 @@ class GraphActivity : AppCompatActivity() {
         for (i in 0..100){
             objects[i] = Values(rand.nextDouble(1.2,20.2).toFloat(),rand.nextDouble(1.0,20.2).toFloat())
         }
+
 
         var dataObjects: Array<Values> = objects
 

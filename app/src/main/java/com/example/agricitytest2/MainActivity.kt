@@ -2,12 +2,15 @@ package com.example.agricitytest2
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agricitytest2.databinding.ActivityMainBinding
+import com.vishnusivadas.advanced_httpurlconnection.FetchData
 import kotlin.random.Random
 
+const val TAG = "MAIN ACTIVITY"
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -40,6 +43,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(returnToLogin)
             finish()
         }
+        val parametro: String = "teste"
+        val experiencia: String = "http://agricity.ipleiria.pt/api/$parametro/1"
+        Log.d(TAG, "O URL é $experiencia")
+        val fetchData: FetchData = FetchData(experiencia)
+        if (fetchData.startFetch()) {
+            Log.d(TAG, "Começou o fetch")
+            if (fetchData.onComplete()) {
+                val resultado = fetchData.result
+                Log.d(TAG, resultado)
+            } else {
+                Log.e(TAG, "Não Completou o fetch")
+            }
+        } else {
+            Log.e(TAG, "Nao fez fetch")
+        }
+        Log.d(TAG, "Chegamos ao fim")
 
         var temperature: String
         var humidity: String
@@ -63,7 +82,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.textViewWindSpeedValue.text = getString(R.string.windSpeedValue, windspeed)
         binding.textViewWindDirValue.text = getString(R.string.windDirValue, windDir)
         binding.textViewPressureValue.text = getString(R.string.pressureValue, pressure)
-
 
 
         val eheheh: ImageButton = binding.menuButton
@@ -91,35 +109,35 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
          }*/
     }
 
-    override fun onClick(v: View){
+    override fun onClick(v: View) {
         when (v.id) {
             binding.temperatureCard.id -> {
-                val goToGraphActivity = Intent(applicationContext,GraphActivity::class.java)
-                goToGraphActivity.putExtra("Parameter","Temperatura")
+                val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
+                goToGraphActivity.putExtra("Parameter", "Temperatura")
                 startActivity(goToGraphActivity)
 //                finish()
             }
             binding.humidityCard.id -> {
-                val goToGraphActivity = Intent(applicationContext,GraphActivity::class.java)
-                goToGraphActivity.putExtra("Parameter","Humidade")
+                val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
+                goToGraphActivity.putExtra("Parameter", "Humidade")
                 startActivity(goToGraphActivity)
 //              finish()
             }
             binding.pressureCard.id -> {
-                val goToGraphActivity = Intent(applicationContext,GraphActivity::class.java)
-                goToGraphActivity.putExtra("Parameter","Pressão")
+                val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
+                goToGraphActivity.putExtra("Parameter", "Pressão")
                 startActivity(goToGraphActivity)
 //              finish()
             }
             binding.rain24HrsCard.id -> {
-                val goToGraphActivity = Intent(applicationContext,GraphActivity::class.java)
-                goToGraphActivity.putExtra("Parameter","Chuva")
+                val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
+                goToGraphActivity.putExtra("Parameter", "Chuva")
                 startActivity(goToGraphActivity)
 //              finish()
             }
             binding.windSpeedCard.id -> {
-                val goToGraphActivity = Intent(applicationContext,GraphActivity::class.java)
-                goToGraphActivity.putExtra("Parameter","Velocidade do vento")
+                val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
+                goToGraphActivity.putExtra("Parameter", "Velocidade do vento")
                 startActivity(goToGraphActivity)
 //              finish()
             }
