@@ -10,7 +10,7 @@ import com.example.agricitytest2.databinding.ActivityMainBinding
 import com.vishnusivadas.advanced_httpurlconnection.FetchData
 import kotlin.random.Random
 
-const val TAG = "MAIN ACTIVITY"
+private const val TAG = "MAIN ACTIVITY"
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -43,15 +43,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(returnToLogin)
             finish()
         }
-        val parametro: String = "teste"
+        val parametro: String = "temperature"
         val experiencia: String = "http://agricity.ipleiria.pt/api/$parametro/1"
         Log.d(TAG, "O URL é $experiencia")
         val fetchData: FetchData = FetchData(experiencia)
         if (fetchData.startFetch()) {
             Log.d(TAG, "Começou o fetch")
             if (fetchData.onComplete()) {
-                val resultado = fetchData.result
-                Log.d(TAG, resultado)
+                try {
+                    val resultado = fetchData.result
+                    Log.d(TAG, resultado)
+                    Log.d(TAG, "Completou o fetch")
+                }catch (e: Exception){
+                    Log.e(TAG,"We are in the beam" + e.message.toString())
+                    val resultado = ""
+                }
             } else {
                 Log.e(TAG, "Não Completou o fetch")
             }
@@ -112,14 +118,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             binding.temperatureCard.id -> {
-                val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
-                goToGraphActivity.putExtra("Parameter", "Temperatura")
+                val goToGraphActivity = Intent(applicationContext, BarChartActivity::class.java)
+                goToGraphActivity.putExtra("Parameter", "temperature")
                 startActivity(goToGraphActivity)
 //                finish()
             }
             binding.humidityCard.id -> {
                 val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
-                goToGraphActivity.putExtra("Parameter", "Humidade")
+                goToGraphActivity.putExtra("Parameter", "humidity")
                 startActivity(goToGraphActivity)
 //              finish()
             }
