@@ -11,9 +11,13 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis.AxisDependency
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import org.json.JSONArray
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 import com.github.mikephil.charting.data.Entry as MikephilChartingDataEntry
 
 private const val TAG = "GRAPH ACTIVITY"
@@ -65,7 +69,7 @@ class GraphActivity : AppCompatActivity() {
         }
 
         val formatter: ValueFormatter = object : ValueFormatter() {
-            override fun getAxisLabel(value: Float, axis: AxisBase): String? {
+            override fun getAxisLabel(value: Float, axis: AxisBase): String {
                 return quarters[value.toInt()]
             }
         }
@@ -94,20 +98,20 @@ class GraphActivity : AppCompatActivity() {
         val xAxis: XAxis = chart.xAxis
         xAxis.granularity = 1f // minimum axis-step (interval) is 1
 
-        xAxis.valueFormatter = formatter
+
 
         val resultado = APIContract.getAPIData(parameter, 1)
 
-        val baseTimestamp = DateTimeToEpoch.dateTimeToEpochFloat(
+        val baseTimestamp = DateTimeToEpoch.dateTimeToEpochLong(
             resultado.getJSONObject(0).get("created_at").toString()
         )
         val lastTimestamp = DateTimeToEpoch.dateTimeToEpochFloat(
             resultado.getJSONObject(resultado.length() - 1).get("created_at").toString()
         )
         val lengthOfArray = resultado.length() - 1
+        xAxis.valueFormatter = TimestampXAxisFormatter(baseTimestamp)
 
-
-        xAxis.axisMinimum = baseTimestamp
+        xAxis.axisMinimum = baseTimestamp.toFloat()
         xAxis.axisMaximum = lastTimestamp
         xAxis.setLabelCount(lengthOfArray, true)
 
@@ -154,6 +158,22 @@ class GraphActivity : AppCompatActivity() {
 //        chart.data = lineData
 //        chart.invalidate() // refresh
 
+    }
+
+
+    internal class TimestampXAxisFormatter(var baseTimestamp: Long) :
+        IndexAxisValueFormatter() {
+        override fun getFormattedValue(value: Float): String {
+
+            // Add base timestamp
+            var timestamp = value.toLong()
+            timestamp += baseTimestamp
+            Log.d(TAG, "getFormattedValue, value : $value")
+            Log.d(TAG, "getFormattedValue, Timestamp : $timestamp")
+
+            // Convert from seconds back to milliseconds to format time  to show to the user
+            return SimpleDateFormat("HH:mm:ss").format(Date(timestamp * 1000))
+        }
     }
 
 

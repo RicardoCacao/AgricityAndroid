@@ -75,22 +75,27 @@ class Login() : AppCompatActivity() {
 
                         if (putData.onComplete()) {
 
-                            progressBar.visibility = GONE
-                            val result = putData.result
+                            try {
+                                progressBar.visibility = GONE
+                                val result = putData.result
 
-                            if (result.equals("Login Success")) {
+                                if (result.equals("Login Success")) {
 
-                                Toast.makeText(applicationContext, R.string.loginSuccess, Toast.LENGTH_SHORT)
-                                    .show()
-                                val intent = Intent(applicationContext, MainActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                                //End ProgressBar (Set visibility to GONE)
+                                    Toast.makeText(applicationContext, R.string.loginSuccess, Toast.LENGTH_SHORT)
+                                        .show()
+                                    val intent = Intent(applicationContext, MainActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                    //End ProgressBar (Set visibility to GONE)
 
-                            } else {
-                                Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
+                                }
+                                Log.i("FetchData", result)
+                            }catch (e: Exception){
+                                Toast.makeText(applicationContext, "Error connecting to server", Toast.LENGTH_SHORT)
                             }
-                            Log.i("FetchData", result)
+
                         }
                         progressBar.visibility = View.INVISIBLE
                     }

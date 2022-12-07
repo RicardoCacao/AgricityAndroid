@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             binding.temperatureCard.id -> {
-                val goToGraphActivity = Intent(applicationContext, BarChartActivity::class.java)
+                val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
                 goToGraphActivity.putExtra("Parameter", "temperature")
                 startActivity(goToGraphActivity)
 //                finish()
