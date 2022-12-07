@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.agricitytest2.databinding.ActivityLoginBinding
 import com.vishnusivadas.advanced_httpurlconnection.PutData
 
+private const val TAG = "LOGIN"
 
 class Login() : AppCompatActivity() {
 

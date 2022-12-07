@@ -16,6 +16,8 @@ import android.widget.Toast
 import com.example.agricitytest2.databinding.ActivitySignupBinding
 import com.vishnusivadas.advanced_httpurlconnection.PutData
 
+private const val TAG = "SIGN UP"
+
 class SignUp : AppCompatActivity() {
 /*    var textInputEditFullname: TextInputEditText? = null
     var textInputEditUsername: TextInputEditText? = null

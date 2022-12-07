@@ -2,6 +2,7 @@ package com.example.agricitytest2
 
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agricitytest2.databinding.ActivityGraphBinding
@@ -15,6 +16,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import org.json.JSONArray
 import com.github.mikephil.charting.data.Entry as MikephilChartingDataEntry
 
+private const val TAG = "GRAPH ACTIVITY"
 
 class GraphActivity : AppCompatActivity() {
 
@@ -33,63 +35,99 @@ class GraphActivity : AppCompatActivity() {
 
         var visitors: ArrayList<LineData>
 
+        val apiResult = APIContract.getAPIData(parameter, 1)
+        if (apiResult == JSONArray()) {
+            Toast.makeText(this, "Error retrieving data from API", Toast.LENGTH_SHORT).show()
+        }
+
+        var entries: MikephilChartingDataEntry = MikephilChartingDataEntry()
+        val valsComp1 = ArrayList<MikephilChartingDataEntry>()
+        //val valsComp2 = ArrayList<MikephilChartingDataEntry>()
+
 
         // the labels that should be drawn on the XAxis
-        // the labels that should be drawn on the XAxis
-        val quarters = arrayOf("Q1", "Q2", "Q3", "Q4")
+        val quarters: MutableList<String> = mutableListOf<String>()
+
+        for (i in 0 until apiResult.length()) {
+            val entrada = apiResult.getJSONObject(i)
+            //var date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(entrada.get("created_at").toString())
+            //Log.d(TAG, " ${entrada.get("valor")} by $date")
+
+            //visitors.add(i, BarEntry(1f + i, i*2f))
+            val data = DateTimeToEpoch.dateTimeToEpochFloat(entrada.get("created_at").toString())
+
+            quarters.add(data.toString())
+            Log.d(TAG, " ${entrada.get("valor")} by $data")
+
+            entries = MikephilChartingDataEntry(data, entrada.get("valor").toString().toFloat())
+            valsComp1.add(entries)
+            //entries.add(BarEntry(data,entrada.get("valor").toString().toFloat()))
+        }
 
         val formatter: ValueFormatter = object : ValueFormatter() {
-            override fun getAxisLabel(value: Float, axis: AxisBase): String {
+            override fun getAxisLabel(value: Float, axis: AxisBase): String? {
                 return quarters[value.toInt()]
             }
         }
+
+
+//        val c1e1: MikephilChartingDataEntry =
+//            MikephilChartingDataEntry(0f, 100000f) // 0 == quarter 1
+//
+//        valsComp1.add(c1e1)
+//
+//        val c1e2: MikephilChartingDataEntry =
+//            MikephilChartingDataEntry(1f, 140000f) // 1 == quarter 2 ...
+//
+//        valsComp1.add(c1e2)
+//        // and so on ...
+//        val c2e1: MikephilChartingDataEntry =
+//            MikephilChartingDataEntry(0f, 130000f) // 0 == quarter 1
+
+//        valsComp2.add(c2e1)
+//        val c2e2: MikephilChartingDataEntry =
+//            MikephilChartingDataEntry(1f, 115000f) // 1 == quarter 2 ...
+//
+//        valsComp2.add(c2e2)
+
 
         val xAxis: XAxis = chart.xAxis
         xAxis.granularity = 1f // minimum axis-step (interval) is 1
 
         xAxis.valueFormatter = formatter
 
+        val resultado = APIContract.getAPIData(parameter, 1)
 
-        val valsComp1 = ArrayList<MikephilChartingDataEntry>()
-        val valsComp2 = ArrayList<MikephilChartingDataEntry>()
+        val baseTimestamp = DateTimeToEpoch.dateTimeToEpochFloat(
+            resultado.getJSONObject(0).get("created_at").toString()
+        )
+        val lastTimestamp = DateTimeToEpoch.dateTimeToEpochFloat(
+            resultado.getJSONObject(resultado.length() - 1).get("created_at").toString()
+        )
+        val lengthOfArray = resultado.length() - 1
 
-        val apiResult = APIContract.getAPIData(parameter, 1)
-        if (apiResult == JSONArray()) {
-            Toast.makeText(this, "Error retrieving data from API", Toast.LENGTH_SHORT).show()
-        }
 
+        xAxis.axisMinimum = baseTimestamp
+        xAxis.axisMaximum = lastTimestamp
+        xAxis.setLabelCount(lengthOfArray, true)
 
-
-        val c1e1: MikephilChartingDataEntry =
-            MikephilChartingDataEntry(0f, 100000f) // 0 == quarter 1
-
-        valsComp1.add(c1e1)
-        val c1e2: MikephilChartingDataEntry =
-            MikephilChartingDataEntry(1f, 140000f) // 1 == quarter 2 ...
-
-        valsComp1.add(c1e2)
-        // and so on ...
-        // and so on ...
-        val c2e1: MikephilChartingDataEntry =
-            MikephilChartingDataEntry(0f, 130000f) // 0 == quarter 1
-
-        valsComp2.add(c2e1)
-        val c2e2: MikephilChartingDataEntry =
-            MikephilChartingDataEntry(1f, 115000f) // 1 == quarter 2 ...
-
-        valsComp2.add(c2e2)
 
         val setComp1 = LineDataSet(valsComp1, "Humidade Exterior")
         setComp1.axisDependency = AxisDependency.LEFT
-        val setComp2 = LineDataSet(valsComp2, "Humidade do solo")
-        setComp2.axisDependency = AxisDependency.LEFT
+        //val setComp2 = LineDataSet(valsComp2, "Humidade do solo")
+        //setComp2.axisDependency = AxisDependency.LEFT
 
 
         val dataSets: MutableList<ILineDataSet> = ArrayList()
         dataSets.add(setComp1)
-        dataSets.add(setComp2)
+        //dataSets.add(setComp2)
         val data = LineData(dataSets)
-        chart.setData(data)
+        try {
+            chart.data = data
+        } catch (e: Exception) {
+            Log.e(TAG, e.toString())
+        }
+
         chart.invalidate() // refresh
 
 
@@ -119,22 +157,40 @@ class GraphActivity : AppCompatActivity() {
     }
 
 
-    data class Values(var timeStamp: Float, var yValue: Float) {
-        fun set(valX: Float, valY: Float) {
-            timeStamp = valX
-            yValue = valY
-        }
+//    data class Values(var timeStamp: Float, var yValue: Float) {
+//        fun set(valX: Float, valY: Float) {
+//            timeStamp = valX
+//            yValue = valY
+//        }
+//
+//        fun getValueX(): Float {
+//            return timeStamp
+//        }
+//
+//        fun getValueY(): Float {
+//            return yValue
+//        }
+//    }
 
-        fun getValueX(): Float {
-            return timeStamp
-        }
-
-        fun getValueY(): Float {
-            return yValue
-        }
+    override fun onStart() {
+        super.onStart()
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
 
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+    }
 }
 
 
