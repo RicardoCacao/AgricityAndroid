@@ -11,8 +11,14 @@
         android:supportsRtl="true"
         android:theme="@style/AgricityTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Login" />
+        <activity android:name=".BarChartActivity" />
+        <activity android:name=".SignUp" />
         <activity
-            android:name=".Login"
+            android:name=".GraphActivity"
+            android:configChanges="uiMode" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,10 +26,5 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BarChartActivity"/>
-        <activity android:name=".SignUp" />
-        <activity android:name=".GraphActivity"
-            android:configChanges="uiMode"/>
-        <activity android:name=".MainActivity" />
     </application>
 </manifest>

@@ -76,7 +76,7 @@ class SignUp : AppCompatActivity() {
                     data[2] = password
                     data[3] = email
                     val putData = PutData(
-                        "http://192.168.1.126/LogIn-SignUp-master/signup.php",
+                        "http://localhost/LogIn-SignUp-master/signup.php",
                         "POST",
                         field,
                         data

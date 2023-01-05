@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agricitytest2.databinding.ActivityLoginBinding
 import com.vishnusivadas.advanced_httpurlconnection.PutData
+import org.json.JSONArray
+import org.json.JSONObject
 
 private const val TAG = "LOGIN"
 
@@ -23,7 +25,7 @@ class Login() : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val textInputEditUsername = binding.username
+        val textInputEditEmail = binding.email
         val textInputEditPassword = binding.password
         val buttonSignUp = binding.buttonLogin
         val textViewSignUp = binding.signUpText
@@ -46,9 +48,9 @@ class Login() : AppCompatActivity() {
 
         buttonSignUp.setOnClickListener {
 
-            val username = textInputEditUsername.text.toString()
+            val email = textInputEditEmail.text.toString()
             val password = textInputEditPassword.text.toString()
-            if (!(username.isNullOrEmpty() || password.isNullOrEmpty())) {
+            if (!(email.isNullOrEmpty() || password.isNullOrEmpty())) {
                 progressBar.visibility = View.VISIBLE
 
                 val handler = Handler(Looper.getMainLooper())
@@ -57,32 +59,41 @@ class Login() : AppCompatActivity() {
                     //Starting Write and Read data with URL
                     //Creating array for parameters
                     val field = arrayOfNulls<String>(2)
-                    field[0] = "username"
+                    field[0] = "email"
                     field[1] = "password"
 
                     //Creating array for data
                     val data = arrayOfNulls<String>(2)
-                    data[0] = username
+                    data[0] = email
                     data[1] = password
 
                     val putData = PutData(
-                        "http://192.168.1.126/LogIn-SignUp-master/login.php",
+                        "http://agricity.ipleiria.pt/api/login",
                         "POST",
                         field,
                         data
                     )
+
                     if (putData.startPut()) {
+                        Log.d(TAG, putData.toString())
 
                         if (putData.onComplete()) {
-
+                            progressBar.visibility = View.GONE
                             try {
-                                progressBar.visibility = GONE
+
                                 val result = putData.result
 
-                                if (result.equals("Login Success")) {
+                                if (result.contains("token")) {
+
+                                    //val resultadoJSON = JSONArray("""$result""")
+                                    //val resultado: JSONObject = resultadoJSON.getJSONObject(0)
+
+//                                    Log.d(TAG, resultado.toString())
+//                                    Log.d(TAG, resultado.getString("name"))
 
                                     Toast.makeText(applicationContext, R.string.loginSuccess, Toast.LENGTH_SHORT)
                                         .show()
+
                                     val intent = Intent(applicationContext, MainActivity::class.java)
                                     startActivity(intent)
                                     finish()
@@ -91,9 +102,9 @@ class Login() : AppCompatActivity() {
                                 } else {
                                     Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
                                 }
-                                Log.i("FetchData", result)
+                                Log.i(TAG, result)
                             }catch (e: Exception){
-                                Toast.makeText(applicationContext, "Error connecting to server", Toast.LENGTH_SHORT)
+                                Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT)
                             }
 
                         }

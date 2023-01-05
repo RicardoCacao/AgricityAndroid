@@ -37,12 +37,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         windSpeedCard.setOnClickListener(this)
 
 
-        val submit: ImageButton = binding.logOutButton
+//         CODE THAT RETURNED USER TO LOGIN SCREEN. NOW DEFUNCT SINCE AUTHENTICATION IS DEEMED UNNECESSARY
+/*        val submit: ImageButton = binding.logOutButton
         submit.setOnClickListener {
             val returnToLogin = Intent(applicationContext, Login::class.java)
             startActivity(returnToLogin)
             finish()
-        }
+        }*/
+
+
         val parametro: String = "temperature"
         val experiencia: String = "http://agricity.ipleiria.pt/api/$parametro/1"
         Log.d(TAG, "O URL é $experiencia")
