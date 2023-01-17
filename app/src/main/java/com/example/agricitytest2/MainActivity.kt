@@ -1,5 +1,6 @@
 package com.example.agricitytest2
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -49,6 +50,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(returnToLogin)
             finish()
         }*/
+
+
 
 
         val parametro: String = "temperature"
@@ -125,6 +128,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
              dbConnection.executeMySQLQuery()
 
          }*/
+    }
+
+
+    private fun testInsert() {
+        val values = ContentValues().apply {
+            put(StationsContract.Columns.STATION_NAME, "eui-23123123")
+            put(StationsContract.Columns.STATION_LAT, "15")
+            put(StationsContract.Columns.STATION_LON, "16")
+            put(StationsContract.Columns.STATION_ALT, "12")
+        }
+
+        val uri = contentResolver.insert(StationsContract.CONTENT_URI, values)
+        Log.d(TAG, "New row id (in uri) is $uri")
+        Log.d(TAG, "id (in uri) is ${StationsContract.getId(uri)}")
     }
 
     override fun onClick(v: View) {
