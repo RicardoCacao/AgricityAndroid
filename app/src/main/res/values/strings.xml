@@ -27,10 +27,10 @@
     <string name="button">Button</string>
     <string name="connectToDB">Ligar</string>
     <string name="buttonPress">Button</string>
-    <string name="temperatura">Temperatura</string>
-    <string name="humidity">Humidade</string>
+    <string name="temperatura">Temperatura do ar</string>
+    <string name="humidity">Humidade do ar</string>
     <string name="windSpeed">Velocidade do Vento</string>
-    <string name="pressure">Pressão</string>
+    <string name="pressure">Pressão barométrica</string>
     <string name="rain24hours">Chuva 24 Horas</string>
     <string name="windDirection">Direcão do Vento</string>
     <string name="tempValue">%s ºC</string>
@@ -48,4 +48,8 @@
     <string name="mode">Day</string>
     <string name="loginSuccess">Sucesso login</string>
     <string name="registerSuccess">Sucesso registo</string>
+    <string name="soilTemperature">Temperatura do solo</string>
+    <string name="soilHumidity">Humidade do solo</string>
+    <string name="soilTempValue">%s ºC</string>
+    <string name="soilHumidityValue">%s %%</string>
 </resources>

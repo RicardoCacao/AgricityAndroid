@@ -28,10 +28,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val pressureCard = binding.pressureCard
         val rain24HrsCard = binding.rain24HrsCard
         val windSpeedCard = binding.windSpeedCard
+        val soilTemperatureCard = binding.soilTemperatureCard
+        val soilHumidityCard = binding.soilHumidityCard
+        val location = binding.locationNameTextView
 
 
         temperatureCard.setOnClickListener(this)
         humidityCard.setOnClickListener(this)
+        soilTemperatureCard.setOnClickListener(this)
+        soilHumidityCard.setOnClickListener(this)
         pressureCard.setOnClickListener(this)
         rain24HrsCard.setOnClickListener(this)
         windSpeedCard.setOnClickListener(this)
@@ -87,14 +92,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.textViewTempValue.text = getString(R.string.tempValue, temperature)
         binding.textViewHumidityValue.text = getString(R.string.humidityValue, humidity)
+        binding.textViewSoilTempValue.text = getString(R.string.soilTempValue, temperature)
+        binding.textViewSoilHumidityValue.text = getString(R.string.soilHumidityValue, humidity)
         binding.textViewRain24hrValue.text = getString(R.string.rain24hrValue, rain)
         binding.textViewWindSpeedValue.text = getString(R.string.windSpeedValue, windspeed)
         binding.textViewWindDirValue.text = getString(R.string.windDirValue, windDir)
         binding.textViewPressureValue.text = getString(R.string.pressureValue, pressure)
 
 
-        val eheheh: ImageButton = binding.menuButton
-        eheheh.setOnClickListener {
+        val randomNumberGeneratorButton: ImageButton = binding.menuButton
+        randomNumberGeneratorButton.setOnClickListener {
 
             temperature = rand.nextInt(16).toString()
             humidity = rand.nextInt(16).toString()
@@ -104,6 +111,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             binding.textViewTempValue.text = getString(R.string.tempValue, temperature)
             binding.textViewHumidityValue.text = getString(R.string.humidityValue, humidity)
+            binding.textViewSoilTempValue.text = getString(R.string.soilTempValue, temperature)
+            binding.textViewSoilHumidityValue.text = getString(R.string.soilHumidityValue, humidity)
             binding.textViewRain24hrValue.text = getString(R.string.rain24hrValue, rain)
             binding.textViewWindSpeedValue.text = getString(R.string.windSpeedValue, windspeed)
             binding.textViewPressureValue.text = getString(R.string.pressureValue, pressure)
@@ -124,7 +133,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
                 goToGraphActivity.putExtra("Parameter", "temperature")
                 startActivity(goToGraphActivity)
-//                finish()
+//              finish()
             }
             binding.humidityCard.id -> {
                 val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
@@ -132,15 +141,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(goToGraphActivity)
 //              finish()
             }
+            binding.soilTemperatureCard.id -> {
+                val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
+                goToGraphActivity.putExtra("Parameter", "soiltemperature")
+                startActivity(goToGraphActivity)
+//              finish()
+            }
+            binding.soilHumidityCard.id -> {
+                val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
+                goToGraphActivity.putExtra("Parameter", "soilhumidity")
+                startActivity(goToGraphActivity)
+//              finish()
+            }
+
             binding.pressureCard.id -> {
                 val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
-                goToGraphActivity.putExtra("Parameter", "pressure")
+                goToGraphActivity.putExtra("Parameter", "barometricpressure")
                 startActivity(goToGraphActivity)
 //              finish()
             }
             binding.rain24HrsCard.id -> {
                 val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
-                goToGraphActivity.putExtra("Parameter", "rain24hrs")
+                goToGraphActivity.putExtra("Parameter", "precipitation")
                 startActivity(goToGraphActivity)
 //              finish()
             }
