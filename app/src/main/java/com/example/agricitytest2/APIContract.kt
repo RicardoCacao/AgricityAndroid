@@ -1,8 +1,11 @@
 package com.example.agricitytest2
 
+import android.content.Context
+import android.nfc.Tag
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.net.toUri
 import com.vishnusivadas.advanced_httpurlconnection.FetchData
 import org.json.JSONArray
@@ -11,6 +14,8 @@ import java.net.URL
 import kotlinx.coroutines.*
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
+import okhttp3.*
+import okio.IOException
 import org.json.JSONObject
 
 
@@ -22,29 +27,28 @@ object APIContract {
 
         val url: String = "http://agricity.ipleiria.pt/api/$parameter/$station"
         Log.d(TAG, "O URL é $url")
+
         val fetchData: FetchData = FetchData(url)
         var resultado: JSONArray = JSONArray()
-        if (fetchData.startFetch()) {
-            Log.d(TAG, "Começou o fetch")
-            if (fetchData.onComplete()) {
-                try {
-                    resultado = JSONArray(fetchData.result)
-                    Log.d(TAG, resultado.toString())
-                    Log.d(TAG, "Completou o fetch")
-                } catch (e: Exception) {
-                    Log.e(TAG, "Exception ocurred: $e")
-                    resultado = JSONArray()
-                }
 
-            } else {
-                Log.e(TAG, "Não Completou o fetch")
-            }
-        } else {
-            Log.e(TAG, "Nao fez fetch")
+        if (!fetchData.startFetch()) {
+            Log.e(TAG, "Error starting fetch")
+            return resultado
         }
-        Log.d(TAG, "Chegamos ao fim")
+        if (!fetchData.onComplete()){
+            Log.e(TAG, "Error completing fetch")
+            return resultado
+        }
 
-        return resultado
+        return try {
+            resultado = JSONArray(fetchData.result)
+            Log.d(TAG, resultado.toString())
+            Log.d(TAG, "Completou o fetch")
+            resultado
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception ocurred: $e")
+            resultado
+        }
     }
 
     fun fetchJson(url: String): Deferred<JsonElement> = GlobalScope.async {
@@ -52,7 +56,26 @@ object APIContract {
         Json.parseToJsonElement(jsonString)
     }
 
+/*    fun getGeolocationData(lat: String, lon: String): String?{
+        val client = OkHttpClient()
+        val request = Request.Builder().url("https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=AIzaSyBXGTirM254qD9mMv6FxYRyFRIML_LoiLg").build()
+        Log.d(TAG, request.toString())
+        val response = client.newCall(request).execute()
+        return response.body?.string() ?: ""
+    }*/
 
+    fun getGeolocationData(lat: String, lon: String, callback: (String) -> Unit) {
+        val client = OkHttpClient()
+        val request = Request.Builder().url("https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=AIzaSyBXGTirM254qD9mMv6FxYRyFRIML_LoiLg").build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                callback("")
+            }
+            override fun onResponse(call: Call, response: Response) {
+                callback(response.body?.string() ?: "")
+            }
+        })
+    }
 
 
 

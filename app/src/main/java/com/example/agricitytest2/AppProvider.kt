@@ -11,10 +11,10 @@ import android.util.Log
 import androidx.core.content.ContentProviderCompat.requireContext
 
 /**
- *
- *
- *
  * Provider for the Agricity app.  This is the only class that knows about [AppDatabase].
+ *
+ *
+ *
  */
 
 private const val TAG = "AppProvider"

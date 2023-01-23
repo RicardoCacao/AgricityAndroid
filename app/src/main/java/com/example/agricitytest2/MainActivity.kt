@@ -10,9 +10,6 @@ import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agricitytest2.databinding.ActivityMainBinding
-import com.vishnusivadas.advanced_httpurlconnection.FetchData
-import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.json.jsonArray
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.random.Random
@@ -31,11 +28,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
 
-        testInsert()
+        //testInsert()
 
         //onStationRefresh()
 
-        displayArrayEntries(APIContract.getStations())
+        displayStations(APIContract.getStations())
+
+        //  CODE THAT RETURNED USER TO LOGIN SCREEN. NOW DEFUNCT SINCE AUTHENTICATION IS DEEMED UNNECESSARY
+        /*val submit: ImageButton = binding.logOutButton
+        submit.setOnClickListener {
+            val returnToLogin = Intent(applicationContext, Login::class.java)
+            startActivity(returnToLogin)
+            finish()
+        }*/
 
         val temperatureCard = binding.temperatureCard
         val humidityCard = binding.humidityCard
@@ -46,7 +51,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val soilHumidityCard = binding.soilHumidityCard
         val location = binding.locationNameTextView
 
-
         temperatureCard.setOnClickListener(this)
         humidityCard.setOnClickListener(this)
         soilTemperatureCard.setOnClickListener(this)
@@ -55,38 +59,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         rain24HrsCard.setOnClickListener(this)
         windSpeedCard.setOnClickListener(this)
 
-
-//         CODE THAT RETURNED USER TO LOGIN SCREEN. NOW DEFUNCT SINCE AUTHENTICATION IS DEEMED UNNECESSARY
-/*        val submit: ImageButton = binding.logOutButton
-        submit.setOnClickListener {
-            val returnToLogin = Intent(applicationContext, Login::class.java)
-            startActivity(returnToLogin)
-            finish()
-        }*/
-
-
-        val parametro: String = "temperature"
-        val experiencia: String = "http://agricity.ipleiria.pt/api/$parametro/1"
-        Log.d(TAG, "O URL é $experiencia")
-        val fetchData: FetchData = FetchData(experiencia)
-        if (fetchData.startFetch()) {
-            Log.d(TAG, "Começou o fetch")
-            if (fetchData.onComplete()) {
-                try {
-                    val resultado = fetchData.result
-                    Log.d(TAG, resultado)
-                    Log.d(TAG, "Completou o fetch")
-                }catch (e: Exception){
-                    Log.e(TAG,"We are in the beam" + e.message.toString())
-                    val resultado = ""
-                }
-            } else {
-                Log.e(TAG, "Não Completou o fetch")
-            }
-        } else {
-            Log.e(TAG, "Nao fez fetch")
-        }
-        Log.d(TAG, "Chegamos ao fim")
 
         var temperature: String
         var humidity: String
@@ -150,44 +122,37 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             put(StationsContract.Columns.STATION_ALT, "12")
         }
 
-
         val uri = Uri.parse(StationsContract.CONTENT_URI.toString())
         val insertedUri = contentResolver.insert(uri, values)
         Log.d(TAG, "New row id (in uri) is $uri")
         Log.d(TAG, "id (in uri) is $insertedUri")
     }
 
-    fun onStationRefresh(){
-//        runBlocking {
-//            val json = APIContract.fetchJson("http://agricity.ipleiria.pt/api/stations").await()
-//            // Use the json object here
-//            Log.d(TAG, json.toString())
-//            val jeff: JSONArray = json.getAsJsonArray
-//            Log.d(TAG, jeff.toString())
-//        }
-    }
-
-
-
-
-    fun displayArrayEntries(jsonArray: JSONArray) {
-
+    fun displayStations(jsonArray: JSONArray) {
 
         val entries = mutableListOf<String>()
         for (i in 0 until jsonArray.length()) {
-            entries.add(jsonArray.getString(i))
+            val jsonObject = jsonArray.getJSONObject(i)
+            val lat = jsonObject.get("lat")
+            val lon = jsonObject.get("lon")
+            APIContract.getGeolocationData(lat.toString(),lon.toString()) { response ->
+                val jsonResponse = JSONArray(response)
+                val results = jsonResponse.getJSONObject(1)
+                val formattedAddress = results.get("formatted_address")
+
+                Log.d(TAG, formattedAddress.toString())
+
+
+
+            }
         }
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, entries)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val spinner = binding.stationPicker
         spinner.adapter = adapter
-        val countTextView = binding.numero
-        "Number of entries: ${jsonArray.length()}".also { countTextView.text = it }
 
 
     }
-
-
 
 
     override fun onClick(v: View) {

@@ -168,8 +168,8 @@ class GraphActivity : AppCompatActivity() {
             // Add base timestamp
             var timestamp = value.toLong()
             timestamp += baseTimestamp
-            Log.d(TAG, "getFormattedValue, value : $value")
-            Log.d(TAG, "getFormattedValue, Timestamp : $timestamp")
+//            Log.d(TAG, "getFormattedValue, value : $value")
+//            Log.d(TAG, "getFormattedValue, Timestamp : $timestamp")
 
             // Convert from seconds back to milliseconds to format time  to show to the user
             return SimpleDateFormat("HH:mm:ss").format(Date(timestamp * 1000))
