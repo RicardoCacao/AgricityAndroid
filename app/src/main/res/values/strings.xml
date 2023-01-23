@@ -36,7 +36,7 @@
     <string name="tempValue">%s ºC</string>
     <string name="humidityValue">%s %% </string>
     <string name="pressureValue">%s Bar</string>
-    <string name="rain24hrValue">%s L/m<sup>2</sup></string>
+    <string name="rain24hrValue">%s mm<sup>2</sup></string>
     <string name="windSpeedValue">%s KM/h</string>
     <string name="windDirValue">%s</string>
     <string name="graphDomainTitle">%s</string>
