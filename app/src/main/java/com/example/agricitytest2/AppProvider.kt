@@ -32,17 +32,18 @@ private const val STATIONS_ID = 101
 
 val CONTENT_AUTHORITY_URI: Uri = Uri.parse("content://$CONTENT_AUTHORITY")
 
-abstract class AppProvider : ContentProvider() {
+
+class AppProvider : ContentProvider() {
 
     private val uriMatcher by lazy { buildUriMatcher() }
 
 
-    private fun buildUriMatcher() : UriMatcher {
+    private fun buildUriMatcher(): UriMatcher {
         Log.d(TAG, "buildUriMatcher: starts")
         val matcher = UriMatcher(UriMatcher.NO_MATCH)
 
         // e.g. content://learnprogramming.academy.tasktimer.provider/Tasks
-        matcher.addURI(CONTENT_AUTHORITY, StationsContract.TABLE_NAME, STATIONS);
+        matcher.addURI(CONTENT_AUTHORITY, StationsContract.TABLE_NAME, STATIONS)
 
         // e.g. content://learnprogramming.academy.tasktimer.provider/Tasks/8
         matcher.addURI(CONTENT_AUTHORITY, "${StationsContract.TABLE_NAME}/#", STATIONS_ID)
@@ -83,8 +84,13 @@ abstract class AppProvider : ContentProvider() {
         }
     }
 
-    override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?,
-                       sortOrder: String?): Cursor {
+    override fun query(
+        uri: Uri,
+        projection: Array<out String>?,
+        selection: String?,
+        selectionArgs: Array<out String>?,
+        sortOrder: String?
+    ): Cursor {
         Log.d(TAG, "query: called with uri $uri")
         val match = uriMatcher.match(uri)
         Log.d(TAG, "query: match is $match")
@@ -124,13 +130,15 @@ abstract class AppProvider : ContentProvider() {
         }
 
         val db = AppDatabase.getInstance(context).readableDatabase
-        val cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder)
-        Log.d(TAG, "query: rows in returned cursor = ${cursor.count}") // TODO remove this line
+        val cursor =
+            queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder)
+        Log.d(TAG, "query: rows in returned cursor = ${cursor.count}") // remove this line if you want
 
         return cursor
     }
 
-    override fun insert(uri: Uri, values: ContentValues): Uri {
+
+    override fun insert(uri: Uri, values: ContentValues?): Uri {
         Log.d(TAG, "insert: called with uri $uri")
         val match = uriMatcher.match(uri)
         Log.d(TAG, "insert: match is $match")
@@ -139,12 +147,12 @@ abstract class AppProvider : ContentProvider() {
 
         val context = requireContext(this)
 
-        when(match) {
+        when (match) {
 
             STATIONS -> {
                 val db = AppDatabase.getInstance(context).writableDatabase
                 recordId = db.insert(StationsContract.TABLE_NAME, null, values)
-                if(recordId != -1L) {
+                if (recordId != -1L) {
                     returnUri = StationsContract.buildUriFromId(recordId)
                 } else {
                     throw SQLException("Failed to insert, Uri was $uri")
@@ -168,7 +176,12 @@ abstract class AppProvider : ContentProvider() {
         return returnUri
     }
 
-    override fun update(uri: Uri, values: ContentValues, selection: String?, selectionArgs: Array<out String>?): Int {
+    override fun update(
+        uri: Uri,
+        values: ContentValues?,
+        selection: String?,
+        selectionArgs: Array<out String>?
+    ): Int {
         Log.d(TAG, "update: called with uri $uri")
         val match = uriMatcher.match(uri)
         Log.d(TAG, "update: match is $match")
@@ -176,7 +189,7 @@ abstract class AppProvider : ContentProvider() {
         val count: Int
         var selectionCriteria: String
 
-        when(match) {
+        when (match) {
 
             STATIONS -> {
                 val db = AppDatabase.getInstance(context).writableDatabase
@@ -188,11 +201,12 @@ abstract class AppProvider : ContentProvider() {
                 val id = StationsContract.getId(uri)
                 selectionCriteria = "${StationsContract.Columns.ID} = $id"
 
-                if(selection != null && selection.isNotEmpty()) {
+                if (selection != null && selection.isNotEmpty()) {
                     selectionCriteria += " AND ($selection)"
                 }
 
-                count = db.update(StationsContract.TABLE_NAME, values, selectionCriteria, selectionArgs)
+                count =
+                    db.update(StationsContract.TABLE_NAME, values, selectionCriteria, selectionArgs)
             }
 
 //            TIMINGS -> {
@@ -227,7 +241,7 @@ abstract class AppProvider : ContentProvider() {
         val count: Int
         var selectionCriteria: String
 
-        when(match) {
+        when (match) {
 
             STATIONS -> {
                 val db = AppDatabase.getInstance(context).writableDatabase
@@ -239,7 +253,7 @@ abstract class AppProvider : ContentProvider() {
                 val id = StationsContract.getId(uri)
                 selectionCriteria = "${StationsContract.Columns.ID} = $id"
 
-                if(selection != null && selection.isNotEmpty()) {
+                if (selection != null && selection.isNotEmpty()) {
                     selectionCriteria += " AND ($selection)"
                 }
 

@@ -26,5 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="com.example.agricitytest2.provider"
+            android:name="com.example.agricitytest2.AppProvider"
+            android:exported="false"
+            android:grantUriPermissions="true" />
     </application>
 </manifest>

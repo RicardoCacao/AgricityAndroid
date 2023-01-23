@@ -20,11 +20,10 @@ object StationsContract {
     // STATIONS fields
     object Columns {
         const val ID = BaseColumns._ID
-        const val STATION_NAME = "Name"
-        const val STATION_LAT = "Latitude"
-        const val STATION_LON = "Longitude"
-        const val STATION_ALT = "Altitude"
-        const val STATION_VEG = "Vegetation"
+        const val STATION_NAME = "nomeEstacao"
+        const val STATION_LAT = "lat"
+        const val STATION_LON = "lon"
+        const val STATION_ALT = "altitude"
 
     }
 

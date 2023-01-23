@@ -2,14 +2,21 @@ package com.example.agricitytest2
 
 import android.content.ContentValues
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agricitytest2.databinding.ActivityMainBinding
 import com.vishnusivadas.advanced_httpurlconnection.FetchData
+import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.jsonArray
+import org.json.JSONArray
+import org.json.JSONObject
 import kotlin.random.Random
+
 
 private const val TAG = "MAIN ACTIVITY"
 
@@ -23,6 +30,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        testInsert()
+
+        //onStationRefresh()
+
+        displayArrayEntries(APIContract.getStations())
 
         val temperatureCard = binding.temperatureCard
         val humidityCard = binding.humidityCard
@@ -50,8 +63,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(returnToLogin)
             finish()
         }*/
-
-
 
 
         val parametro: String = "temperature"
@@ -139,10 +150,45 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             put(StationsContract.Columns.STATION_ALT, "12")
         }
 
-        val uri = contentResolver.insert(StationsContract.CONTENT_URI, values)
+
+        val uri = Uri.parse(StationsContract.CONTENT_URI.toString())
+        val insertedUri = contentResolver.insert(uri, values)
         Log.d(TAG, "New row id (in uri) is $uri")
-        Log.d(TAG, "id (in uri) is ${StationsContract.getId(uri)}")
+        Log.d(TAG, "id (in uri) is $insertedUri")
     }
+
+    fun onStationRefresh(){
+//        runBlocking {
+//            val json = APIContract.fetchJson("http://agricity.ipleiria.pt/api/stations").await()
+//            // Use the json object here
+//            Log.d(TAG, json.toString())
+//            val jeff: JSONArray = json.getAsJsonArray
+//            Log.d(TAG, jeff.toString())
+//        }
+    }
+
+
+
+
+    fun displayArrayEntries(jsonArray: JSONArray) {
+
+
+        val entries = mutableListOf<String>()
+        for (i in 0 until jsonArray.length()) {
+            entries.add(jsonArray.getString(i))
+        }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, entries)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val spinner = binding.stationPicker
+        spinner.adapter = adapter
+        val countTextView = binding.numero
+        "Number of entries: ${jsonArray.length()}".also { countTextView.text = it }
+
+
+    }
+
+
+
 
     override fun onClick(v: View) {
         when (v.id) {
