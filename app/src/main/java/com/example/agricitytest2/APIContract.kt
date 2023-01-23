@@ -66,7 +66,7 @@ object APIContract {
 
     fun getGeolocationData(lat: String, lon: String, callback: (String) -> Unit) {
         val client = OkHttpClient()
-        val request = Request.Builder().url("https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=AIzaSyBXGTirM254qD9mMv6FxYRyFRIML_LoiLg").build()
+        val request = Request.Builder().url("https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=9e7b172e21ae4bb2b272d8de05388ec6" ).build()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 callback("")

@@ -135,17 +135,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val jsonObject = jsonArray.getJSONObject(i)
             val lat = jsonObject.get("lat")
             val lon = jsonObject.get("lon")
-            APIContract.getGeolocationData(lat.toString(),lon.toString()) { response ->
-                val jsonResponse = JSONArray(response)
-                val results = jsonResponse.getJSONObject(1)
-                val formattedAddress = results.get("formatted_address")
-
-                Log.d(TAG, formattedAddress.toString())
-
-
-
+            APIContract.getGeolocationData(lat.toString(), lon.toString()) { response ->
+                val json = JSONObject(response)
+                val features = json.getJSONArray("features")
+                val properties = features.getJSONObject(0).getJSONObject("properties")
+                val addressLine2 = properties.getString("address_line2")
+                Log.d(TAG,addressLine2)
+                entries.add(addressLine2)
+                }
             }
-        }
+
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, entries)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val spinner = binding.stationPicker
