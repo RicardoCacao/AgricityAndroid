@@ -83,26 +83,6 @@ object APIContract {
         val url: String = "http://agricity.ipleiria.pt/api/stations"
         Log.d(TAG, "Fetching Stations")
 
-
-//        val connection = url.openConnection() as HttpURLConnection
-//        connection.requestMethod = "POST"
-//        connection.doOutput = true
-//        connection.doInput = true
-//        connection.useCaches = false
-//        connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
-//        val data = ""
-//        val outputStream = connection.outputStream
-//        outputStream.write(data.toByteArray())
-//        outputStream.flush()
-//        outputStream.close()
-//        val responseCode = connection.responseCode
-//        val responseMessage = connection.responseMessage
-//
-//        Log.d(TAG, responseCode.toString() + "\n")
-//        Log.d(TAG, responseMessage)
-//        return JSONArray(responseMessage)
-
-
         val fetchData: FetchData = FetchData(url)
         var resultado: JSONArray = JSONArray()
 
