@@ -149,8 +149,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val spinner = binding.stationPicker
         spinner.adapter = adapter
-
-
     }
 
 
@@ -202,5 +200,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
     }
+
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
 
 }

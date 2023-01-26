@@ -10,16 +10,16 @@ object DateTimeToEpoch {
 
     fun dateTimeToEpochLong(dateTime: String): Long {
 
-        Log.d(TAG, "Passed $dateTime")
+        //Log.d(TAG, "Passed $dateTime")
         val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTime.toString()).time.toLong()
-        Log.d(TAG, "Returned $df")
+        //Log.d(TAG, "Returned $df")
         return  df
 
     }
     fun dateTimeToEpochFloat(dateTime: String): Float {
-        Log.d(TAG, "Passed $dateTime")
+        //Log.d(TAG, "Passed $dateTime")
         val df =  SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTime.toString()).time.toFloat()
-        Log.d(TAG, "Returned $df")
+        //Log.d(TAG, "Returned $df")
         return  df
 
     }
