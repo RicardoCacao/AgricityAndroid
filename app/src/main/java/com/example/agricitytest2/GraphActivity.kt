@@ -172,7 +172,7 @@ class GraphActivity : AppCompatActivity() {
 //            Log.d(TAG, "getFormattedValue, Timestamp : $timestamp")
 
             // Convert from seconds back to milliseconds to format time  to show to the user
-            return SimpleDateFormat("HH:mm:ss").format(Date(timestamp * 1000))
+            return SimpleDateFormat("HH:mm").format(Date(timestamp * 1000))
         }
     }
 
