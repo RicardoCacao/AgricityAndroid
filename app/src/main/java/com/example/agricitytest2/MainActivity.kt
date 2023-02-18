@@ -129,20 +129,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun displayStations(jsonArray: JSONArray) {
-
         val entries = mutableListOf<String>()
         for (i in 0 until jsonArray.length()) {
             val jsonObject = jsonArray.getJSONObject(i)
             val lat = jsonObject.get("lat")
             val lon = jsonObject.get("lon")
-            APIContract.getGeolocationData(lat.toString(), lon.toString()) { response ->
-                val json = JSONObject(response)
-                val features = json.getJSONArray("features")
-                val properties = features.getJSONObject(0).getJSONObject("properties")
-                val addressLine2 = properties.getString("address_line2")
-                Log.d(TAG,addressLine2)
-                entries.add(addressLine2)
-                }
+            entries.add(jsonObject.toString())
+//            APIContract.getGeolocationData(lat.toString(), lon.toString()) { response ->
+//                val json = JSONObject(response)
+//                val features = json.getJSONArray("features")
+//                val properties = features.getJSONObject(0).getJSONObject("properties")
+//                val addressLine2 = properties.getString("address_line2")
+//                Log.d(TAG,addressLine2)
+//                entries.add(addressLine2)
+//                }
             }
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, entries)
