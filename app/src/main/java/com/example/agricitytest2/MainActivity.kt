@@ -134,7 +134,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val jsonObject = jsonArray.getJSONObject(i)
             val lat = jsonObject.get("lat")
             val lon = jsonObject.get("lon")
-            entries.add(jsonObject.toString())
+            val id = jsonObject.get("id")
+            entries.add(id.toString())
 //            APIContract.getGeolocationData(lat.toString(), lon.toString()) { response ->
 //                val json = JSONObject(response)
 //                val features = json.getJSONArray("features")
