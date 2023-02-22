@@ -1,6 +1,7 @@
 package com.example.agricitytest2
 
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,7 +10,9 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.get
 import com.example.agricitytest2.databinding.ActivityMainBinding
 import org.json.JSONArray
@@ -125,18 +128,38 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 position: Int,
                 id: Long
             ) {
-                Log.d(TAG, "Position: $position and id: $id")
-                val mapaDeValores = APIContract.getAllDataFromStation(parent?.getItemAtPosition(position).toString().toInt())
+                val mapaDeValores = APIContract.getAllDataFromStation(
+                    parent?.getItemAtPosition(position).toString().toInt()
+                )
+                if (mapaDeValores.isNullOrEmpty()) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Demasiados pedidos. Tente novamente mais tarde",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    if (mapaDeValores.size == 9) {
+                        binding.textViewTempValue.text =
+                            getString(R.string.tempValue, mapaDeValores["temperature"])
+                        binding.textViewHumidityValue.text =
+                            getString(R.string.humidityValue, mapaDeValores["humidity"])
+                        binding.textViewSoilTempValue.text =
+                            getString(R.string.soilTempValue, mapaDeValores["soiltemperature"])
+                        binding.textViewSoilHumidityValue.text =
+                            getString(R.string.soilHumidityValue, mapaDeValores["soilhumidity"])
+                        binding.textViewRain24hrValue.text =
+                            getString(R.string.rain24hrValue, mapaDeValores["precipitation"])
+                        binding.textViewWindSpeedValue.text =
+                            getString(R.string.windSpeedValue, mapaDeValores["windspeed"])
+                        binding.textViewPressureValue.text =
+                            getString(R.string.pressureValue, mapaDeValores["barometricpressure"])
+                        binding.textViewWindDirValue.text = getString(
+                            R.string.windDirValue,
+                            mapaDeValores["winddirection"]?.substringBefore("\\")?.replace("\"", "")
+                        )
+                    }
 
-                binding.textViewTempValue.text = getString(R.string.tempValue, mapaDeValores["temperature"])
-                binding.textViewHumidityValue.text = getString(R.string.humidityValue, mapaDeValores["humidity"])
-                binding.textViewSoilTempValue.text = getString(R.string.soilTempValue, mapaDeValores["soiltemperature"])
-                binding.textViewSoilHumidityValue.text =
-                    getString(R.string.soilHumidityValue, mapaDeValores["soilhumidity"])
-                binding.textViewRain24hrValue.text = getString(R.string.rain24hrValue, mapaDeValores["precipitation"])
-                binding.textViewWindSpeedValue.text = getString(R.string.windSpeedValue, mapaDeValores["windspeed"])
-                binding.textViewPressureValue.text = getString(R.string.pressureValue, mapaDeValores["barometricpressure"])
-                binding.textViewWindDirValue.text = getString(R.string.windDirValue, mapaDeValores["winddirection"]?.substringBefore("\\")?.replace("\"",""))
+                }
             }
 
         }
@@ -240,6 +263,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val insertedUri = contentResolver.insert(uri, values)
         Log.d(TAG, "New row id (in uri) is $uri")
         Log.d(TAG, "id (in uri) is $insertedUri")
+    }
+
+    fun setLocationTextView(id: Int) {
+
     }
 
     fun displayStations(jsonArray: JSONArray) {

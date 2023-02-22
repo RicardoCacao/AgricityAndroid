@@ -21,7 +21,7 @@ import okio.IOException
 import org.json.JSONObject
 
 
-private const val TAG = "API"
+private const val TAG = "API Contract"
 
 object APIContract {
 
@@ -96,38 +96,42 @@ object APIContract {
             "winddirection",
             "windspeed"
         )
+        try {
 
-        for (parameter in listOfParameters) {
-            val url: String = "http://agricity.ipleiria.pt/api/$parameter/$station"
-            var json: JSONArray = JSONArray()
-            Log.d(TAG, "O URL é $url")
+            for (parameter in listOfParameters) {
+                val url: String = "http://agricity.ipleiria.pt/api/$parameter/$station"
+                var json: JSONArray = JSONArray()
+                Log.d(TAG, "O URL é $url")
 
-            val fetchData: FetchData = FetchData(url)
+                val fetchData: FetchData = FetchData(url)
 
-            try {
+
                 if (!fetchData.startFetch()) {
                     Log.e(TAG, "Error starting fetch")
+                    break
                 }
                 if (!fetchData.onComplete()) {
                     Log.e(TAG, "Error completing fetch with $parameter")
+                    break
                 }
-
                 json = JSONArray(fetchData.result)
-                //Log.d(TAG, j.toString())
+
+                Log.d(TAG, json.toString())
+                if (json != JSONArray()) {
+                    val jsonArray = Json.decodeFromString<JsonArray>(json.toString())
+                    val lastJsonObject = jsonArray.lastOrNull() as? JsonObject
+                    val lastValor = lastJsonObject?.get("valor")?.jsonPrimitive?.toString()
+
+                    resultado[parameter] = lastValor.toString()
+                }
                 //Log.d(TAG, "Completou o fetch")
-
-                val jsonArray = Json.decodeFromString<JsonArray>(json.toString())
-                val lastJsonObject = jsonArray.lastOrNull() as? JsonObject
-                val lastValor = lastJsonObject?.get("valor")?.jsonPrimitive?.toString()
-
-                resultado[parameter] = lastValor.toString()
-
                 //Log.d(TAG, resultado.toString())
-            } catch (e: Exception) {
-                println("An error occurred while processing parameter $parameter: ${e.message}")
+
             }
+        } catch (e: Exception) {
+            println("An error occurred while processing parameters from station $station: ${e.message}")
         }
-        Log.d(TAG,resultado.toString())
+        Log.d(TAG, "All latest values from station $station: $resultado")
         return resultado
     }
 
