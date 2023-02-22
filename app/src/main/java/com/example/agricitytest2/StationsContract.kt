@@ -1,5 +1,6 @@
 package com.example.agricitytest2
 
+import android.content.ContentResolver
 import android.content.ContentUris
 import android.net.Uri
 import android.provider.BaseColumns
@@ -24,6 +25,7 @@ object StationsContract {
         const val STATION_LAT = "lat"
         const val STATION_LON = "lon"
         const val STATION_ALT = "altitude"
+        const val LOCATION = "location"
     }
 
     fun getId(uri: Uri): Long {
@@ -33,5 +35,23 @@ object StationsContract {
     fun buildUriFromId(id: Long): Uri {
         return ContentUris.withAppendedId(CONTENT_URI, id)
     }
+
+    fun checkIfRowExists(contentResolver: ContentResolver, id: Long): Boolean {
+        val uri = ContentUris.withAppendedId(CONTENT_URI, id)
+        val columnName = BaseColumns._ID
+        val projection = arrayOf(columnName) // replace with the name of the column you want to check
+        val selection = "_id = ?"
+        val selectionArgs = arrayOf(id.toString())
+        val sortOrder = null // null means use the default sort order
+
+        val cursor = contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
+
+        val rowExists = cursor?.moveToFirst() ?: false
+
+        cursor?.close()
+
+        return rowExists
+    }
+
 
 }

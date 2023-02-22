@@ -1,10 +1,12 @@
 package com.example.agricitytest2
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.BaseColumns
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -16,6 +18,7 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.get
 import com.example.agricitytest2.databinding.ActivityMainBinding
 import org.json.JSONArray
+import org.json.JSONObject
 import kotlin.random.Random
 
 
@@ -39,7 +42,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         //testInsert()
         //onStationRefresh()
 
-        displayStations(APIContract.getStations())
 
         /*CODE THAT RETURNED USER TO LOGIN SCREEN. NOW DEFUNCT SINCE AUTHENTICATION IS DEEMED UNNECESSARY*/
         /*val submit: ImageButton = binding.logOutButton
@@ -48,6 +50,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(returnToLogin)
             finish()
         }*/
+
 
         val temperatureCard = binding.temperatureCard
         val humidityCard = binding.humidityCard
@@ -59,8 +62,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val location = binding.locationNameTextView
         val stationPicker = binding.stationPicker
 
-
-        val stationId: Int = stationPicker.selectedItem.toString().toInt()
+        displayStations(APIContract.getStations(this))
+        //Sets the location view text
+        try {
+            val stationId: Int = stationPicker.selectedItem.toString().toInt()
+            setLocationTextNameValue(stationId.toLong())
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception while assigning ID: ${e.message}")
+        }
 
         temperatureCard.setOnClickListener(this)
         humidityCard.setOnClickListener(this)
@@ -122,15 +131,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             }
 
+            @SuppressLint("ResourceType")
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
+                val stationId = stationPicker.selectedItem.toString()
+                setLocationTextNameValue(stationId.toLong())
+
                 val mapaDeValores = APIContract.getAllDataFromStation(
                     parent?.getItemAtPosition(position).toString().toInt()
                 )
+
                 if (mapaDeValores.isNullOrEmpty()) {
                     Toast.makeText(
                         this@MainActivity,
@@ -152,10 +166,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         binding.textViewWindSpeedValue.text =
                             getString(R.string.windSpeedValue, mapaDeValores["windspeed"])
                         binding.textViewPressureValue.text =
-                            getString(R.string.pressureValue, mapaDeValores["barometricpressure"])
+                            getString(
+                                R.string.pressureValue,
+                                mapaDeValores["barometricpressure"]
+                            )
                         binding.textViewWindDirValue.text = getString(
                             R.string.windDirValue,
-                            mapaDeValores["winddirection"]?.substringBefore("\\")?.replace("\"", "")
+                            mapaDeValores["winddirection"]?.substringBefore("\\")
+                                ?.replace("\"", "")
                         )
                     }
 
@@ -222,7 +240,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //              finish()
             }
             binding.locationNameTextView.id -> {
-                val goToGraphActivity = Intent(applicationContext, MapsMarkerActivity::class.java)
+                val goToGraphActivity =
+                    Intent(applicationContext, MapsMarkerActivity::class.java)
                 goToGraphActivity.putExtra("Parameter", "windspeed")
                 goToGraphActivity.putExtra("Station", "$stationId")
                 startActivity(goToGraphActivity)
@@ -250,7 +269,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onDestroy()
     }
 
-
     private fun testInsert() {
         val values = ContentValues().apply {
             put(StationsContract.Columns.STATION_NAME, "eui-23123123")
@@ -265,9 +283,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         Log.d(TAG, "id (in uri) is $insertedUri")
     }
 
-    fun setLocationTextView(id: Int) {
-
-    }
 
     fun displayStations(jsonArray: JSONArray) {
         val entries = mutableListOf<String>()
@@ -276,6 +291,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val lat = jsonObject.get("lat")
             val lon = jsonObject.get("lon")
             val id = jsonObject.get("id")
+
             entries.add(id.toString())
 //            APIContract.getGeolocationData(lat.toString(), lon.toString()) { response ->
 //                val json = JSONObject(response)
@@ -285,12 +301,86 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //                Log.d(TAG,addressLine2)
 //                entries.add(addressLine2)
 //                }
+
         }
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, entries)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val spinner = binding.stationPicker
         spinner.adapter = adapter
+    }
+
+
+    fun setLocationTextNameValue(id: Long) {
+
+        val selectStation = StationsContract.Columns.ID + " = ?"
+        val selectionArgs = arrayOf(id.toString())
+
+        Log.d(TAG, "Selection is $selectStation and selection arguments are $selectionArgs")
+        try {
+            val existe = StationsContract.checkIfRowExists(contentResolver, id)
+            Log.d(TAG, "Existe ou nao: $existe")
+            if (existe) {
+                val cursor = contentResolver.query(
+                    StationsContract.buildUriFromId(id), null, null, null, null
+                )
+                val columnIndex = cursor?.getColumnIndex(StationsContract.Columns.LOCATION)
+                if (columnIndex != null && columnIndex > 0) {
+                    if (cursor.moveToFirst()) {
+                        val sauh = cursor.getString(columnIndex)
+                        val tuihadiusha = cursor.getString(columnIndex).isNullOrEmpty()
+                        if (!tuihadiusha) {
+                            Log.d(TAG, "AAHAHAHAHAHHAAHHAHAAHHAHAH ${cursor.getString(columnIndex)}")
+                            val locationValue = binding.locationNameTextView
+                            locationValue.text = getString(
+                                R.string.locationNameTextViewValue,
+                                cursor.getString(columnIndex)
+                            )
+                            Log.d(TAG, "Definicao de LocationNameTextViewValue")
+                        } else {
+
+                            var lat: String = cursor.getColumnIndex(StationsContract.Columns.STATION_LAT).toString()
+                            lat = cursor.getString(lat.toInt())
+                            var lon: String = cursor.getColumnIndex(StationsContract.Columns.STATION_LON).toString()
+                            lon = cursor.getString(lon.toInt())
+                            APIContract.getGeolocationData(lat, lon) { response ->
+                                val json = JSONObject(response)
+                                val features = json.getJSONArray("features")
+                                val properties =
+                                    features.getJSONObject(0).getJSONObject("properties")
+                                val addressLine2 = properties.getString("address_line2")
+                                Log.d(TAG, addressLine2)
+                                val values = ContentValues().apply {
+                                    put(
+                                        StationsContract.Columns.LOCATION,
+                                        addressLine2
+                                    )
+                                }
+                                val locationValue = binding.locationNameTextView
+                                locationValue.text = getString(
+                                    R.string.locationNameTextViewValue,addressLine2
+                                )
+
+                                Log.d(TAG, "Insertions de LocationNameTextViewValue no base de dados")
+                                val taskUri = StationsContract.buildUriFromId(id)
+                                val rowsAffected =
+                                    contentResolver.update(taskUri, values, null, null)
+                                Log.d(TAG, "Number of rows updated is $rowsAffected")
+
+                            }
+
+                        }
+                    }
+                }
+
+            }
+        } catch (e: Exception) {
+            Log.e(
+                TAG,
+                "Exception Caught while trying to query Database for location value: ${e.message}"
+            )
+        }
+
     }
 
 

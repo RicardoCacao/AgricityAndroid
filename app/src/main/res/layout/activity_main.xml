@@ -117,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Coimbra, Agrária"
+                        android:text="@string/locationNameTextViewValue"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="@+id/locationTextView"
                         app:layout_constraintTop_toBottomOf="@+id/locationTextView" />

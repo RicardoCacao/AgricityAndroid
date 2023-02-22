@@ -1,24 +1,20 @@
 package com.example.agricitytest2
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import android.content.ContentValues
+import android.content.ContentResolver
 import android.content.Context
-import android.nfc.Tag
+import android.provider.BaseColumns
 import android.util.Log
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.net.toUri
 import com.vishnusivadas.advanced_httpurlconnection.FetchData
 import org.json.JSONArray
-import java.net.HttpURLConnection
 import java.net.URL
+import android.os.Bundle
+import androidx.core.content.ContentProviderCompat.requireContext
 import kotlinx.coroutines.*
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.json.*
 import okhttp3.*
 import okio.IOException
-import org.json.JSONObject
 
 
 private const val TAG = "API Contract"
@@ -77,14 +73,20 @@ object APIContract {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                callback(response.body?.string() ?: "")
+                try{
+                    callback(response.body?.string() ?: "")
+                }catch (e: Exception){
+                    Log.e(TAG,"Exception retrieving geolocation data: ${e.message}")
+                }
+
             }
         })
     }
 
 
+    @OptIn(ExperimentalSerializationApi::class)
     fun getAllDataFromStation(station: Int): MutableMap<String, String> {
-        var resultado = mutableMapOf<String, String>()
+        val resultado = mutableMapOf<String, String>()
         val listOfParameters = arrayOf(
             "temperature",
             "humidity",
@@ -105,7 +107,6 @@ object APIContract {
 
                 val fetchData: FetchData = FetchData(url)
 
-
                 if (!fetchData.startFetch()) {
                     Log.e(TAG, "Error starting fetch")
                     break
@@ -114,9 +115,9 @@ object APIContract {
                     Log.e(TAG, "Error completing fetch with $parameter")
                     break
                 }
-                json = JSONArray(fetchData.result)
 
-                Log.d(TAG, json.toString())
+                json = JSONArray(fetchData.result)
+                //Log.d(TAG, json.toString())
                 if (json != JSONArray()) {
                     val jsonArray = Json.decodeFromString<JsonArray>(json.toString())
                     val lastJsonObject = jsonArray.lastOrNull() as? JsonObject
@@ -135,8 +136,38 @@ object APIContract {
         return resultado
     }
 
+    fun putStationsInDB(jsonArray: JSONArray, context: Context) {
 
-    fun getStations(): JSONArray {
+        for (i in 0 until jsonArray.length()) {
+            val jsonObject = jsonArray.getJSONObject(i)
+            val id: Long = (jsonObject.get("id")).toString().toLong()
+            val lat = jsonObject.get("lat").toString()
+            val lon = jsonObject.get("lon").toString()
+            val altitude = jsonObject.get("altitude").toString()
+            val nomeEstacao = jsonObject.get("nomeEstacao").toString()
+            val selectStation = StationsContract.Columns.STATION_NAME + " = ?"
+            val selectionArgs = arrayOf(nomeEstacao)
+
+
+
+            if (!(StationsContract.checkIfRowExists(context.contentResolver, id))){
+                val values = ContentValues().apply {
+                    put(StationsContract.Columns.ID, id)
+                    put(StationsContract.Columns.STATION_NAME, nomeEstacao)
+                    put(StationsContract.Columns.STATION_LAT, lat)
+                    put(StationsContract.Columns.STATION_LON, lon)
+                    put(StationsContract.Columns.STATION_ALT, altitude)
+                }
+
+                val uri = context.contentResolver.insert(StationsContract.CONTENT_URI, values)
+                Log.d(TAG, "New row id (in uri) is $uri")
+                Log.d(TAG, "id (in uri) is ${uri?.let { StationsContract.getId(it) }}")
+            }
+
+        }
+    }
+
+    fun getStations(context: Context): JSONArray {
         val url: String = "http://agricity.ipleiria.pt/api/stations"
         Log.d(TAG, "Fetching Stations")
 
@@ -155,9 +186,12 @@ object APIContract {
             resultado = JSONArray(fetchData.result)
             Log.d(TAG, resultado.toString())
             Log.d(TAG, "Completou o fetch")
+
+            putStationsInDB(resultado, context)
+
             return resultado
         } catch (e: Exception) {
-            Log.e(TAG, "Exception ocurred: $e")
+            Log.e(TAG, "Exception ocurred: ${e.message}")
             return resultado
         }
 
