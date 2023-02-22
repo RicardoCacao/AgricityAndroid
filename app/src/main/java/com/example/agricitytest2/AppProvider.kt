@@ -159,15 +159,7 @@ class AppProvider : ContentProvider() {
                 }
             }
 
-//            TIMINGS -> {
-//                val db = AppDatabase.getInstance(context).writableDatabase
-//                recordId = db.insert(TimingsContract.TABLE_NAME, null,values)
-//                if(recordId != -1L) {
-//                    returnUri = TimingsContract.buildUriFromId(recordId)
-//                } else {
-//                    throw SQLException("Failed to insert, Uri was $uri")
-//                }
-//            }
+
 
             else -> throw IllegalArgumentException("Unknown uri: $uri")
         }
@@ -209,22 +201,6 @@ class AppProvider : ContentProvider() {
                     db.update(StationsContract.TABLE_NAME, values, selectionCriteria, selectionArgs)
             }
 
-//            TIMINGS -> {
-//                val db = AppDatabase.getInstance(context).writableDatabase
-//                count = db.update(TimingsContract.TABLE_NAME, values, selection, selectionArgs)
-//            }
-//
-//            TIMINGS_ID -> {
-//                val db = AppDatabase.getInstance(context).writableDatabase
-//                val id = TimingsContract.getId(uri)
-//                selectionCriteria = "${TimingsContract.Columns.ID} = $id"
-//
-//                if(selection != null && selection.isNotEmpty()) {
-//                    selectionCriteria += " AND ($selection)"
-//                }
-//
-//                count = db.update(TimingsContract.TABLE_NAME, values, selectionCriteria, selectionArgs)
-//            }
 
             else -> throw IllegalArgumentException("Unknown uri: $uri")
         }

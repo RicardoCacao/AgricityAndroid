@@ -2,24 +2,17 @@ package com.example.agricitytest2
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.BaseColumns
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.view.get
 import com.example.agricitytest2.databinding.ActivityMainBinding
 import org.json.JSONArray
 import org.json.JSONObject
-import kotlin.random.Random
 
 
 private const val TAG = "MAIN ACTIVITY"
@@ -81,50 +74,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         location.setOnClickListener(this)
 
 
-//        var temperature: String
-//        var humidity: String
-//        var rain: String
-//        var windSpeed: String
-//        var pressure: String
-//        val windDir: String = getString(R.string.windDirectionValue)
-//
-//        val rand = Random
-//
-//
-//        temperature = rand.nextInt(16).toString()
-//        humidity = rand.nextInt(16).toString()
-//        rain = rand.nextInt(16).toString()
-//        windSpeed = rand.nextInt(16).toString()
-//        pressure = rand.nextInt(16).toString()
-
-//        binding.textViewTempValue.text = getString(R.string.tempValue, temperature)
-//        binding.textViewHumidityValue.text = getString(R.string.humidityValue, humidity)
-//        binding.textViewSoilTempValue.text = getString(R.string.soilTempValue, temperature)
-//        binding.textViewSoilHumidityValue.text = getString(R.string.soilHumidityValue, humidity)
-//        binding.textViewRain24hrValue.text = getString(R.string.rain24hrValue, rain)
-//        binding.textViewWindSpeedValue.text = getString(R.string.windSpeedValue, windSpeed)
-//        binding.textViewWindDirValue.text = getString(R.string.windDirValue, windDir)
-//        binding.textViewPressureValue.text = getString(R.string.pressureValue, pressure)
-
-//
-//        val randomNumberGeneratorButton: ImageButton = binding.menuButton
-//        randomNumberGeneratorButton.setOnClickListener {
-//
-//            temperature = rand.nextInt(16).toString()
-//            humidity = rand.nextInt(16).toString()
-//            rain = rand.nextInt(16).toString()
-//            windSpeed = rand.nextInt(16).toString()
-//            pressure = rand.nextInt(16).toString()
-//
-//            binding.textViewTempValue.text = getString(R.string.tempValue, temperature)
-//            binding.textViewHumidityValue.text = getString(R.string.humidityValue, humidity)
-//            binding.textViewSoilTempValue.text = getString(R.string.soilTempValue, temperature)
-//            binding.textViewSoilHumidityValue.text = getString(R.string.soilHumidityValue, humidity)
-//            binding.textViewRain24hrValue.text = getString(R.string.rain24hrValue, rain)
-//            binding.textViewWindSpeedValue.text = getString(R.string.windSpeedValue, windSpeed)
-//            binding.textViewPressureValue.text = getString(R.string.pressureValue, pressure)
-//        }
-
 
         stationPicker.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -145,7 +94,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     parent?.getItemAtPosition(position).toString().toInt()
                 )
 
-                if (mapaDeValores.isNullOrEmpty()) {
+                if (mapaDeValores.isEmpty()) {
                     Toast.makeText(
                         this@MainActivity,
                         "Demasiados pedidos. Tente novamente mais tarde",
@@ -269,7 +218,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onDestroy()
     }
 
-    private fun testInsert() {
+
+/*    private fun testInsert() {
         val values = ContentValues().apply {
             put(StationsContract.Columns.STATION_NAME, "eui-23123123")
             put(StationsContract.Columns.STATION_LAT, "15")
@@ -281,26 +231,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val insertedUri = contentResolver.insert(uri, values)
         Log.d(TAG, "New row id (in uri) is $uri")
         Log.d(TAG, "id (in uri) is $insertedUri")
-    }
+    }*/
 
 
     fun displayStations(jsonArray: JSONArray) {
         val entries = mutableListOf<String>()
         for (i in 0 until jsonArray.length()) {
             val jsonObject = jsonArray.getJSONObject(i)
-            val lat = jsonObject.get("lat")
-            val lon = jsonObject.get("lon")
+//            val lat = jsonObject.get("lat")
+//            val lon = jsonObject.get("lon")
             val id = jsonObject.get("id")
 
             entries.add(id.toString())
-//            APIContract.getGeolocationData(lat.toString(), lon.toString()) { response ->
-//                val json = JSONObject(response)
-//                val features = json.getJSONArray("features")
-//                val properties = features.getJSONObject(0).getJSONObject("properties")
-//                val addressLine2 = properties.getString("address_line2")
-//                Log.d(TAG,addressLine2)
-//                entries.add(addressLine2)
-//                }
+
 
         }
 
@@ -327,10 +270,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 val columnIndex = cursor?.getColumnIndex(StationsContract.Columns.LOCATION)
                 if (columnIndex != null && columnIndex > 0) {
                     if (cursor.moveToFirst()) {
-                        val sauh = cursor.getString(columnIndex)
-                        val tuihadiusha = cursor.getString(columnIndex).isNullOrEmpty()
-                        if (!tuihadiusha) {
-                            Log.d(TAG, "AAHAHAHAHAHHAAHHAHAAHHAHAH ${cursor.getString(columnIndex)}")
+                        if (!(cursor.getString(columnIndex).isNullOrEmpty())) {
                             val locationValue = binding.locationNameTextView
                             locationValue.text = getString(
                                 R.string.locationNameTextViewValue,
@@ -372,6 +312,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
                 }
+                cursor?.close()
 
             }
         } catch (e: Exception) {

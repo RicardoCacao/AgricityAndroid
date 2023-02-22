@@ -1,16 +1,10 @@
 package com.example.agricitytest2
 
 import android.content.ContentValues
-import android.content.ContentResolver
 import android.content.Context
-import android.provider.BaseColumns
 import android.util.Log
 import com.vishnusivadas.advanced_httpurlconnection.FetchData
 import org.json.JSONArray
-import java.net.URL
-import android.os.Bundle
-import androidx.core.content.ContentProviderCompat.requireContext
-import kotlinx.coroutines.*
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import okhttp3.*
@@ -23,11 +17,11 @@ object APIContract {
 
     fun getAPIData(parameter: String, station: Int): JSONArray {
 
-        val url: String = "http://agricity.ipleiria.pt/api/$parameter/$station"
+        val url = "http://agricity.ipleiria.pt/api/$parameter/$station"
         Log.d(TAG, "O URL é $url")
 
-        val fetchData: FetchData = FetchData(url)
-        var resultado: JSONArray = JSONArray()
+        val fetchData = FetchData(url)
+        var resultado = JSONArray()
 
         if (!fetchData.startFetch()) {
             Log.e(TAG, "Error starting fetch")
@@ -49,10 +43,10 @@ object APIContract {
         }
     }
 
-    fun fetchJson(url: String): Deferred<JsonElement> = GlobalScope.async {
+    /*fun fetchJson(url: String): Deferred<JsonElement> = GlobalScope.async {
         val jsonString = URL(url).readText()
         Json.parseToJsonElement(jsonString)
-    }
+    }*/
 
 /*    fun getGeolocationData(lat: String, lon: String): String?{
         val client = OkHttpClient()
@@ -84,6 +78,7 @@ object APIContract {
     }
 
 
+
     @OptIn(ExperimentalSerializationApi::class)
     fun getAllDataFromStation(station: Int): MutableMap<String, String> {
         val resultado = mutableMapOf<String, String>()
@@ -99,13 +94,12 @@ object APIContract {
             "windspeed"
         )
         try {
-
             for (parameter in listOfParameters) {
-                val url: String = "http://agricity.ipleiria.pt/api/$parameter/$station"
-                var json: JSONArray = JSONArray()
+                val url = "http://agricity.ipleiria.pt/api/$parameter/$station"
+                var json: JSONArray
                 Log.d(TAG, "O URL é $url")
 
-                val fetchData: FetchData = FetchData(url)
+                val fetchData = FetchData(url)
 
                 if (!fetchData.startFetch()) {
                     Log.e(TAG, "Error starting fetch")
@@ -145,8 +139,6 @@ object APIContract {
             val lon = jsonObject.get("lon").toString()
             val altitude = jsonObject.get("altitude").toString()
             val nomeEstacao = jsonObject.get("nomeEstacao").toString()
-            val selectStation = StationsContract.Columns.STATION_NAME + " = ?"
-            val selectionArgs = arrayOf(nomeEstacao)
 
 
 
@@ -168,11 +160,11 @@ object APIContract {
     }
 
     fun getStations(context: Context): JSONArray {
-        val url: String = "http://agricity.ipleiria.pt/api/stations"
+        val url = "http://agricity.ipleiria.pt/api/stations"
         Log.d(TAG, "Fetching Stations")
 
-        val fetchData: FetchData = FetchData(url)
-        var resultado: JSONArray = JSONArray()
+        val fetchData = FetchData(url)
+        var resultado = JSONArray()
 
         if (!fetchData.startFetch()) {
             Log.e(TAG, "Error starting fetch")
