@@ -1,5 +1,6 @@
 package com.example.agricitytest2
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import android.content.Context
 import android.nfc.Tag
 import android.util.Log
@@ -13,6 +14,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import kotlinx.coroutines.*
 import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.json.*
 import okhttp3.*
 import okio.IOException
@@ -35,7 +37,7 @@ object APIContract {
             Log.e(TAG, "Error starting fetch")
             return resultado
         }
-        if (!fetchData.onComplete()){
+        if (!fetchData.onComplete()) {
             Log.e(TAG, "Error completing fetch")
             return resultado
         }
@@ -66,17 +68,68 @@ object APIContract {
 
     fun getGeolocationData(lat: String, lon: String, callback: (String) -> Unit) {
         val client = OkHttpClient()
-        val request = Request.Builder().url("https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=9e7b172e21ae4bb2b272d8de05388ec6" ).build()
+        val request = Request.Builder()
+            .url("https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=9e7b172e21ae4bb2b272d8de05388ec6")
+            .build()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 callback("")
             }
+
             override fun onResponse(call: Call, response: Response) {
                 callback(response.body?.string() ?: "")
             }
         })
     }
 
+
+    fun getAllDataFromStation(station: Int): MutableMap<String, String> {
+        var resultado = mutableMapOf<String, String>()
+        val listOfParameters = arrayOf(
+            "temperature",
+            "humidity",
+            "barometricpressure",
+            "precipitation",
+            "soilhumidity",
+            "soiltemperature",
+            "sunlightuvi",
+            "winddirection",
+            "windspeed"
+        )
+
+        for (parameter in listOfParameters) {
+            val url: String = "http://agricity.ipleiria.pt/api/$parameter/$station"
+            var json: JSONArray = JSONArray()
+            Log.d(TAG, "O URL é $url")
+
+            val fetchData: FetchData = FetchData(url)
+
+            try {
+                if (!fetchData.startFetch()) {
+                    Log.e(TAG, "Error starting fetch")
+                }
+                if (!fetchData.onComplete()) {
+                    Log.e(TAG, "Error completing fetch with $parameter")
+                }
+
+                json = JSONArray(fetchData.result)
+                //Log.d(TAG, j.toString())
+                //Log.d(TAG, "Completou o fetch")
+
+                val jsonArray = Json.decodeFromString<JsonArray>(json.toString())
+                val lastJsonObject = jsonArray.lastOrNull() as? JsonObject
+                val lastValor = lastJsonObject?.get("valor")?.jsonPrimitive?.toString()
+
+                resultado[parameter] = lastValor.toString()
+
+                //Log.d(TAG, resultado.toString())
+            } catch (e: Exception) {
+                println("An error occurred while processing parameter $parameter: ${e.message}")
+            }
+        }
+        Log.d(TAG,resultado.toString())
+        return resultado
+    }
 
 
     fun getStations(): JSONArray {
@@ -90,7 +143,7 @@ object APIContract {
             Log.e(TAG, "Error starting fetch")
             return resultado
         }
-        if (!fetchData.onComplete()){
+        if (!fetchData.onComplete()) {
             Log.e(TAG, "Error completing fetch")
         }
 

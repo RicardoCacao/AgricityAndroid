@@ -24,7 +24,6 @@ object StationsContract {
         const val STATION_LAT = "lat"
         const val STATION_LON = "lon"
         const val STATION_ALT = "altitude"
-
     }
 
     fun getId(uri: Uri): Long {
