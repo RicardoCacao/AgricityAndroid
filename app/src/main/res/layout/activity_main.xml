@@ -117,11 +117,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Coimbra, Agrária"
-                        android:textColor="@android:color/black"
+                        android:text="@string/locationNameTextViewValue"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="@+id/locationTextView"
                         app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
+
+                    <Spinner
+                        android:id="@+id/stationPicker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:minHeight="48dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/locationNameTextView"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+
+
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

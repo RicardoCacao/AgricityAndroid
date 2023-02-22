@@ -6,13 +6,10 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.view.View.GONE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.agricitytest2.databinding.ActivityLoginBinding
 import com.vishnusivadas.advanced_httpurlconnection.PutData
-import org.json.JSONArray
-import org.json.JSONObject
 
 private const val TAG = "LOGIN"
 
@@ -50,11 +47,11 @@ class Login() : AppCompatActivity() {
 
             val email = textInputEditEmail.text.toString()
             val password = textInputEditPassword.text.toString()
-            if (!(email.isNullOrEmpty() || password.isNullOrEmpty())) {
+            if (!(email.isEmpty() || password.isEmpty())) {
                 progressBar.visibility = View.VISIBLE
 
                 val handler = Handler(Looper.getMainLooper())
-                handler.post(Runnable {
+                handler.post {
 
                     //Starting Write and Read data with URL
                     //Creating array for parameters
@@ -91,10 +88,15 @@ class Login() : AppCompatActivity() {
 //                                    Log.d(TAG, resultado.toString())
 //                                    Log.d(TAG, resultado.getString("name"))
 
-                                    Toast.makeText(applicationContext, R.string.loginSuccess, Toast.LENGTH_SHORT)
+                                    Toast.makeText(
+                                        applicationContext,
+                                        R.string.loginSuccess,
+                                        Toast.LENGTH_SHORT
+                                    )
                                         .show()
 
-                                    val intent = Intent(applicationContext, MainActivity::class.java)
+                                    val intent =
+                                        Intent(applicationContext, MainActivity::class.java)
                                     startActivity(intent)
                                     finish()
                                     //End ProgressBar (Set visibility to GONE)
@@ -103,14 +105,14 @@ class Login() : AppCompatActivity() {
                                     Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
                                 }
                                 Log.i(TAG, result)
-                            }catch (e: Exception){
-                                Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT)
+                            } catch (e: Exception) {
+                                Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show()
                             }
 
                         }
                         progressBar.visibility = View.INVISIBLE
                     }
-                })
+                }
             } else {
                 Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
             }

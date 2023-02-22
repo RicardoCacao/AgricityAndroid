@@ -1,6 +1,5 @@
 package com.example.agricitytest2
 
-import android.util.Log
 import java.text.SimpleDateFormat
 
 private const val TAG = "DateTimeToEpoch"
@@ -10,17 +9,15 @@ object DateTimeToEpoch {
 
     fun dateTimeToEpochLong(dateTime: String): Long {
 
-        Log.d(TAG, "Passed $dateTime")
-        val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTime.toString()).time.toLong()
-        Log.d(TAG, "Returned $df")
-        return  df
+        //Log.d(TAG, "Passed $dateTime")
+        //Log.d(TAG, "Returned $df")
+        return SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dateTime.toString()).time.toLong()
 
     }
     fun dateTimeToEpochFloat(dateTime: String): Float {
-        Log.d(TAG, "Passed $dateTime")
-        val df =  SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTime.toString()).time.toFloat()
-        Log.d(TAG, "Returned $df")
-        return  df
+        //Log.d(TAG, "Passed $dateTime")
+        //Log.d(TAG, "Returned $df")
+        return SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dateTime.toString()).time.toFloat()
 
     }
 

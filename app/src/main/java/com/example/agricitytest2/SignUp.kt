@@ -2,16 +2,12 @@ package com.example.agricitytest2
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.textfield.TextInputEditText
-import android.widget.TextView
 import android.os.Bundle
 import android.os.Handler
-import com.example.agricitytest2.R
 import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
-import android.widget.Button
 import android.widget.Toast
 import com.example.agricitytest2.databinding.ActivitySignupBinding
 import com.vishnusivadas.advanced_httpurlconnection.PutData
@@ -48,7 +44,7 @@ class SignUp : AppCompatActivity() {
             finish()
         }
 
-
+        Log.d(TAG, "At the login")
 
         buttonSignUp.setOnClickListener {
             val fullname = textInputEditFullname.text.toString()
@@ -56,7 +52,7 @@ class SignUp : AppCompatActivity() {
             val password = textInputEditPassword.text.toString()
             val email = textInputEditEmail.text.toString()
 
-            if (!(fullname.isNullOrEmpty() || username.isNullOrEmpty() || password.isNullOrEmpty() || email.isNullOrEmpty())) {
+            if (!(fullname.isEmpty() || username.isEmpty() || password.isEmpty() || email.isEmpty())) {
 
                 progressBar.visibility = View.VISIBLE
                 //Start ProgressBar first (Set visibility VISIBLE)
@@ -91,6 +87,7 @@ class SignUp : AppCompatActivity() {
                                     .show()
                                 val intent = Intent(applicationContext, Login::class.java)
                                 startActivity(intent)
+
                                 finish()
                             } else {
                                 Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
@@ -104,6 +101,7 @@ class SignUp : AppCompatActivity() {
                 Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
 
             }
+
         }
     }
 }

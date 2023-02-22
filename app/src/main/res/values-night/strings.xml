@@ -27,16 +27,16 @@
     <string name="button">Button</string>
     <string name="connectToDB">Ligar</string>
     <string name="buttonPress">Button</string>
-    <string name="temperatura">Temperatura</string>
-    <string name="humidity">Humidade</string>
+    <string name="temperatura">Temperatura do ar</string>
+    <string name="humidity">Humidade do ar</string>
     <string name="windSpeed">Velocidade do Vento</string>
-    <string name="pressure">Pressão</string>
+    <string name="pressure">Pressão barométrica</string>
     <string name="rain24hours">Chuva 24 Horas</string>
     <string name="windDirection">Direcão do Vento</string>
     <string name="tempValue">%s ºC</string>
     <string name="humidityValue">%s %% </string>
     <string name="pressureValue">%s Bar</string>
-    <string name="rain24hrValue">%s L/m<sup>2</sup></string>
+    <string name="rain24hrValue">%s mm</string>
     <string name="windSpeedValue">%s KM/h</string>
     <string name="windDirValue">%s</string>
     <string name="graphDomainTitle">%s</string>
@@ -45,5 +45,12 @@
     <string name="windDirectionValue">NNW</string>
     <string name="signInAsGuest">Entrar anónimo</string>
     <string name="logOutButton">Log out</string>
-    <string name="mode">Night</string>
+    <string name="mode">Day</string>
+    <string name="loginSuccess">Sucesso login</string>
+    <string name="registerSuccess">Sucesso registo</string>
+    <string name="soilTemperature">Temperatura do solo</string>
+    <string name="soilHumidity">Humidade do solo</string>
+    <string name="soilTempValue">%s ºC</string>
+    <string name="soilHumidityValue">%s %%</string>
+    <string name="locationNameTextViewValue">%s</string>
 </resources>

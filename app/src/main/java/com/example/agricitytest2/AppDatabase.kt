@@ -32,7 +32,7 @@ internal class AppDatabase private constructor(context: Context): SQLiteOpenHelp
             ${StationsContract.Columns.STATION_LAT} TEXT NOT NULL,
             ${StationsContract.Columns.STATION_LON} TEXT NOT NULL,
             ${StationsContract.Columns.STATION_ALT} TEXT NOT NULL,
-            ${StationsContract.Columns.STATION_VEG} TEXT);""".replaceIndent(" ")
+            ${StationsContract.Columns.LOCATION} TEXT DEFAULT NULL);""".replaceIndent("")
         Log.d(TAG, sSQL)
         db.execSQL(sSQL)
 

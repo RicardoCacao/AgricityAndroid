@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.agricitytest2">
 
+
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
@@ -11,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/AgricityTheme"
         android:usesCleartextTraffic="true">
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
+
         <activity android:name=".Login" />
         <activity android:name=".BarChartActivity" />
         <activity android:name=".SignUp" />
@@ -26,5 +36,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MapsMarkerActivity"/>
+
+        <provider
+            android:authorities="com.example.agricitytest2.provider"
+            android:name="com.example.agricitytest2.AppProvider"
+            android:exported="false"
+            android:grantUriPermissions="true" />
     </application>
 </manifest>
