@@ -11,13 +11,13 @@ object DateTimeToEpoch {
 
         //Log.d(TAG, "Passed $dateTime")
         //Log.d(TAG, "Returned $df")
-        return SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dateTime.toString()).time.toLong()
+        return SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dateTime)!!.time
 
     }
     fun dateTimeToEpochFloat(dateTime: String): Float {
         //Log.d(TAG, "Passed $dateTime")
         //Log.d(TAG, "Returned $df")
-        return SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dateTime.toString()).time.toFloat()
+        return SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dateTime)!!.time.toFloat()
 
     }
 

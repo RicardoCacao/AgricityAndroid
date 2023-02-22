@@ -1,6 +1,7 @@
 package com.example.agricitytest2
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -68,6 +69,7 @@ class GraphActivity : AppCompatActivity() {
 
     internal class TimestampXAxisFormatter(var baseTimestamp: Long) :
         IndexAxisValueFormatter() {
+        @SuppressLint("SimpleDateFormat")
         override fun getFormattedValue(value: Float): String {
 
             // Add base timestamp
@@ -109,7 +111,6 @@ class GraphActivity : AppCompatActivity() {
         val id: String = intent.getStringExtra("Station").toString()
         val stationId: Int = id.toInt()
 
-        var visitors: ArrayList<LineData>
         val chart = binding.chart
 
         val apiResult = APIContract.getAPIData(parameter, stationId)
@@ -117,7 +118,7 @@ class GraphActivity : AppCompatActivity() {
             Toast.makeText(this, "Error retrieving data from API", Toast.LENGTH_SHORT).show()
         }
 
-        var entries: MikephilChartingDataEntry = MikephilChartingDataEntry()
+        var entries: com.github.mikephil.charting.data.Entry
         val valsComp1 = ArrayList<MikephilChartingDataEntry>()
         //val valsComp2 = ArrayList<MikephilChartingDataEntry>()
 
@@ -142,7 +143,7 @@ class GraphActivity : AppCompatActivity() {
         }
 
 
-        val formatter: ValueFormatter = object : ValueFormatter() {
+        object : ValueFormatter() {
             override fun getAxisLabel(value: Float, axis: AxisBase): String {
                 return quarters[value.toInt()]
             }

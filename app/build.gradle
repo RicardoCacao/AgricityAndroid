@@ -3,18 +3,15 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 
 
-
-
-
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.agricitytest2"
         minSdk 26
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         Properties properties = new Properties()
@@ -29,8 +26,14 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-           proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+
+        }
+        debug {
+            debuggable true
         }
     }
     compileOptions {
@@ -59,9 +62,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0"
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.14.+"
-
-
-
 
 
 }
