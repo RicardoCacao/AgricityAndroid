@@ -49,7 +49,6 @@ internal class AppDatabase private constructor(context: Context): SQLiteOpenHelp
     }
 
     companion object : SingletonHolder<AppDatabase, Context>(::AppDatabase)
-//
 //    companion object {
 //
 //        @Volatile

@@ -139,8 +139,6 @@ object APIContract {
             val altitude = jsonObject.get("altitude").toString()
             val nomeEstacao = jsonObject.get("nomeEstacao").toString()
 
-
-
             if (!(StationsContract.checkIfRowExists(context.contentResolver, id))) {
                 val values = ContentValues().apply {
                     put(StationsContract.Columns.ID, id)
