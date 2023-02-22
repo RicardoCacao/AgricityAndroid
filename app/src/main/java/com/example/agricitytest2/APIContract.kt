@@ -67,16 +67,15 @@ object APIContract {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                try{
+                try {
                     callback(response.body?.string() ?: "")
-                }catch (e: Exception){
-                    Log.e(TAG,"Exception retrieving geolocation data: ${e.message}")
+                } catch (e: Exception) {
+                    Log.e(TAG, "Exception retrieving geolocation data: ${e.message}")
                 }
 
             }
         })
     }
-
 
 
     @OptIn(ExperimentalSerializationApi::class)
@@ -142,7 +141,7 @@ object APIContract {
 
 
 
-            if (!(StationsContract.checkIfRowExists(context.contentResolver, id))){
+            if (!(StationsContract.checkIfRowExists(context.contentResolver, id))) {
                 val values = ContentValues().apply {
                     put(StationsContract.Columns.ID, id)
                     put(StationsContract.Columns.STATION_NAME, nomeEstacao)
@@ -186,7 +185,5 @@ object APIContract {
             Log.e(TAG, "Exception ocurred: ${e.message}")
             return resultado
         }
-
     }
-
 }

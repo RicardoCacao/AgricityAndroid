@@ -32,10 +32,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
 
-        //testInsert()
-        //onStationRefresh()
-
-
         /*CODE THAT RETURNED USER TO LOGIN SCREEN. NOW DEFUNCT SINCE AUTHENTICATION IS DEEMED UNNECESSARY*/
         /*val submit: ImageButton = binding.logOutButton
         submit.setOnClickListener {
@@ -43,7 +39,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(returnToLogin)
             finish()
         }*/
-
 
         val temperatureCard = binding.temperatureCard
         val humidityCard = binding.humidityCard
@@ -72,8 +67,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         rain24HrsCard.setOnClickListener(this)
         windSpeedCard.setOnClickListener(this)
         location.setOnClickListener(this)
-
-
 
         stationPicker.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -241,10 +234,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //            val lat = jsonObject.get("lat")
 //            val lon = jsonObject.get("lon")
             val id = jsonObject.get("id")
-
             entries.add(id.toString())
-
-
         }
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, entries)
@@ -278,7 +268,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             )
                             Log.d(TAG, "Definicao de LocationNameTextViewValue")
                         } else {
-
                             var lat: String = cursor.getColumnIndex(StationsContract.Columns.STATION_LAT).toString()
                             lat = cursor.getString(lat.toInt())
                             var lon: String = cursor.getColumnIndex(StationsContract.Columns.STATION_LON).toString()

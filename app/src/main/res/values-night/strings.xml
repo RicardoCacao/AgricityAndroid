@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Agricity Test2</string>
+    <string name="app_name" translatable="false">Agricity Mobile</string>
     <string name="username">Utilizador</string>
     <string name="password">Palavra Passe</string>
     <string name="forgot_your_password">Esqueci a password</string>
